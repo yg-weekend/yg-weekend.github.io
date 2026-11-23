@@ -139,10 +139,129 @@
       "credit": "Benjamin Smith",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Bari_-_Lungomare_Imperatore_Augusto_%26_Mare.jpg"
+    },
+    "PMO": {
+      "article": "Palermo Cathedral",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Palermo_Cathedral_Facade.jpg/960px-Palermo_Cathedral_Facade.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Julian Lupyan",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Palermo_Cathedral_Facade.jpg"
+    },
+    "MLA": {
+      "article": "Valletta",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/St_Sebastian_Curtain_%28cropped%29.jpg/960px-St_Sebastian_Curtain_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Mandyy88",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:St_Sebastian_Curtain_(cropped).jpg"
+    },
+    "HER": {
+      "article": "Knossos",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Crete_integrated_map-en.svg/960px-Crete_integrated_map-en.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Eric Gaba (Sting)",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Crete_integrated_map-en.svg"
+    },
+    "CHQ": {
+      "article": "Chania",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Aerial_view_of_the_Old_Venetian_Harbour_in_Chania%2C_Greece.jpg/960px-Aerial_view_of_the_Old_Venetian_Harbour_in_Chania%2C_Greece.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "dronepicr",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Old_Venetian_Harbour_in_Chania,_Greece.jpg"
+    },
+    "CFU": {
+      "article": "Corfu (city)",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Corfu_Montage_L.png/960px-Corfu_Montage_L.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "SilentResident (compilation, sources to attribute see above;",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Corfu_Montage_L.png"
+    },
+    "JTR": {
+      "article": "Oia, Greece",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Oia_sunset_-_panoramio_%282%29.jpg/960px-Oia_sunset_-_panoramio_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "TomasEE",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Oia_sunset_-_panoramio_(2).jpg"
+    },
+    "JMK": {
+      "article": "Mykonos",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/2011_Dimos_Mykonou.png/960px-2011_Dimos_Mykonou.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Pitichinaccio",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:2011_Dimos_Mykonou.png"
+    },
+    "KGS": {
+      "article": "Kos",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Greece_kos_city.jpg/960px-Greece_kos_city.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Arne Müseler",
+      "license": "CC BY-SA 3.0 de",
+      "source": "https://commons.wikimedia.org/wiki/File:Greece_kos_city.jpg"
+    },
+    "CPH": {
+      "article": "Nyhavn",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/The_Nyhavn_Canal_3.jpg/960px-The_Nyhavn_Canal_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "European Commission",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:The_Nyhavn_Canal_3.jpg"
+    },
+    "KRK": {
+      "article": "Main Square, Kraków",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Sukiennice_and_Main_Market_Square_Krakow_Poland.JPG/960px-Sukiennice_and_Main_Market_Square_Krakow_Poland.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Jorge Lascar",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sukiennice_and_Main_Market_Square_Krakow_Poland.JPG"
+    },
+    "WAW": {
+      "article": "Castle Square, Warsaw",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/Castle_Square_%2822346p%29.jpg/960px-Castle_Square_%2822346p%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Rhododendrites",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Castle_Square_(22346p).jpg"
+    },
+    "BEG": {
+      "article": "Belgrade Fortress",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/P037152-661920_-_Belgrade_fortress_stand_at_the_downtown_of_Belgrade.jpg/960px-P037152-661920_-_Belgrade_fortress_stand_at_the_downtown_of_Belgrade.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Oliver Bunic",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:P037152-661920_-_Belgrade_fortress_stand_at_the_downtown_of_Belgrade.jpg"
+    },
+    "AMS": {
+      "article": "Canals of Amsterdam",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png/960px-Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Andrés Barrios",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png"
+    },
+    "LON": {
+      "article": "Tower Bridge",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Tower_Bridge_at_Dawn.jpg/960px-Tower_Bridge_at_Dawn.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Fuzzypiggy",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_at_Dawn.jpg"
+    },
+    "PAR": {
+      "article": "Eiffel Tower",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/960px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Benh LIEU SONG",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Tour_Eiffel_Wikimedia_Commons_(cropped).jpg"
+    },
+    "EVN": {
+      "article": "Yerevan",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Mount_Ararat_and_the_Yerevan_skyline_%28June_2018%29.jpg/960px-Mount_Ararat_and_the_Yerevan_skyline_%28June_2018%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "Սէրուժ Ուրիշեան (Serouj Ourishian)",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mount_Ararat_and_the_Yerevan_skyline_(June_2018).jpg"
+    },
+    "DXB": {
+      "article": "Burj Khalifa",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Burj_Khalifa_%28worlds_tallest_building%29_and_the_Dubai_skyline_%2825781049892%29.jpg/960px-Burj_Khalifa_%28worlds_tallest_building%29_and_the_Dubai_skyline_%2825781049892%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "credit": "imran shahabuddin",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Burj_Khalifa_(worlds_tallest_building)_and_the_Dubai_skyline_(25781049892).jpg"
     }
   },
   "site_url": "https://yg-weekend.github.io",
-  "generated_at": "2026-11-23T15:31+02:00",
+  "generated_at": "2026-11-23T15:38+02:00",
   "demo": false,
   "weekends": [
     "2026-11-26",
@@ -208,7 +327,7 @@
         "name": "ירוואן",
         "flag": "🇦🇲",
         "price": 710,
-        "prev_price": null,
+        "prev_price": 710,
         "out_date": "2026-12-11",
         "out_day": "שישי",
         "ret_date": "2026-12-13",
@@ -277,7 +396,7 @@
         "name": "בלגרד",
         "flag": "🇷🇸",
         "price": 766,
-        "prev_price": null,
+        "prev_price": 766,
         "out_date": "2026-12-11",
         "out_day": "שישי",
         "ret_date": "2026-12-13",
@@ -300,7 +419,7 @@
         "name": "ורשה",
         "flag": "🇵🇱",
         "price": 770,
-        "prev_price": null,
+        "prev_price": 770,
         "out_date": "2026-12-10",
         "out_day": "חמישי",
         "ret_date": "2026-12-13",
@@ -346,7 +465,7 @@
         "name": "קרקוב",
         "flag": "🇵🇱",
         "price": 781,
-        "prev_price": null,
+        "prev_price": 781,
         "out_date": "2026-12-10",
         "out_day": "חמישי",
         "ret_date": "2026-12-12",
@@ -417,7 +536,7 @@
         "name": "ירוואן",
         "flag": "🇦🇲",
         "price": 710,
-        "prev_price": null,
+        "prev_price": 710,
         "out_date": "2026-12-11",
         "out_day": "שישי",
         "ret_date": "2026-12-13",
@@ -463,7 +582,7 @@
         "name": "בלגרד",
         "flag": "🇷🇸",
         "price": 766,
-        "prev_price": null,
+        "prev_price": 766,
         "out_date": "2026-12-11",
         "out_day": "שישי",
         "ret_date": "2026-12-13",
@@ -486,7 +605,7 @@
         "name": "ורשה",
         "flag": "🇵🇱",
         "price": 770,
-        "prev_price": null,
+        "prev_price": 770,
         "out_date": "2026-12-10",
         "out_day": "חמישי",
         "ret_date": "2026-12-13",
@@ -555,7 +674,7 @@
         "name": "קרקוב",
         "flag": "🇵🇱",
         "price": 803,
-        "prev_price": null,
+        "prev_price": 803,
         "out_date": "2026-12-10",
         "out_day": "חמישי",
         "ret_date": "2026-12-13",
