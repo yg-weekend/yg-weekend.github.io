@@ -103,5 +103,40 @@
     "credit": "Diego Delso",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Ateneo_Rumano,_Bucarest,_Ruman%C3%ADa,_2016-05-29,_DD_73.jpg"
+  },
+  "VCE": {
+    "article": "Grand Canal (Venice)",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/View_of_the_Grand_Canal_from_Rialto_to_Ca%27Foscari.jpg/960px-View_of_the_Grand_Canal_from_Rialto_to_Ca%27Foscari.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "credit": "Didier Descouens",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:View_of_the_Grand_Canal_from_Rialto_to_Ca%27Foscari.jpg"
+  },
+  "NAP": {
+    "article": "Castel dell'Ovo",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/Castel_dell%27_Ovo.jpg/960px-Castel_dell%27_Ovo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "credit": "PaestumPaestum",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Castel_dell%27_Ovo.jpg"
+  },
+  "BLQ": {
+    "article": "Two Towers, Bologna",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Asinelli_e_Garisenda.jpg/960px-Asinelli_e_Garisenda.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "credit": "Vanni Lazzari",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Asinelli_e_Garisenda.jpg"
+  },
+  "VRN": {
+    "article": "Verona Arena",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/Arena-XE3F2406a.jpg/960px-Arena-XE3F2406a.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "credit": "Claconvr",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Arena-XE3F2406a.jpg"
+  },
+  "BRI": {
+    "article": "Bari",
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Bari_-_Lungomare_Imperatore_Augusto_%26_Mare.jpg/960px-Bari_-_Lungomare_Imperatore_Augusto_%26_Mare.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "credit": "Benjamin Smith",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bari_-_Lungomare_Imperatore_Augusto_%26_Mare.jpg"
   }
 }
