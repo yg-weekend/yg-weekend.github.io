@@ -261,7 +261,7 @@
     }
   },
   "site_url": "https://yg-weekend.github.io",
-  "generated_at": "2026-11-23T16:18+02:00",
+  "generated_at": "2026-11-23T16:36+02:00",
   "demo": false,
   "weekends": [
     "2026-11-26",
@@ -299,6 +299,7 @@
         "land_by": "14:26",
         "to_center_km": 9,
         "to_center_min": 20,
+        "pt_min": 30,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fcyprus%2F"
       },
@@ -325,6 +326,7 @@
         "land_by": "13:55",
         "to_center_km": 49,
         "to_center_min": 60,
+        "pt_min": 60,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fitaly%2F"
       },
@@ -333,7 +335,7 @@
         "name": "פאפוס",
         "flag": "🇨🇾",
         "price": 708,
-        "prev_price": 788,
+        "prev_price": 708,
         "out_date": "2026-12-03",
         "out_day": "חמישי",
         "ret_date": "2026-12-06",
@@ -351,6 +353,7 @@
         "land_by": "14:25",
         "to_center_km": 17,
         "to_center_min": 25,
+        "pt_min": 40,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fcyprus%2F"
       },
@@ -374,9 +377,10 @@
         "link": "https://www.aviasales.com/search/TLV1112EVN13121?t=W617969760001797074400001520TLVLCAEVN17971452001797231900001565EVNLCATLV_f0363cce703376fdf4cb7faed0d73147_17724&search_date=19112026&expected_price_uuid=01a1f299-cd73-8030-61b6-22c20340d4cc&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=R4p58PN9OUZ_W4spnGtEtw&expected_price_source=share&expected_price_currency=ils&expected_price=710&marker=810512",
         "candle_lighting": "17:17",
         "havdalah": "18:21",
-        "land_by": "15:02",
+        "land_by": "15:12",
         "to_center_km": 12,
-        "to_center_min": 45,
+        "to_center_min": 35,
+        "pt_min": 60,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Farmenia%2F"
       },
@@ -400,9 +404,10 @@
         "link": "https://www.aviasales.com/search/TLV1112OTP13121?t=W417970063001797016500000170TLVOTP17971452001797231900001445OTPLCATLV_80fded1dec98eb69b36ced2549b13b1a_17643&search_date=21112026&expected_price_uuid=01a1fc38-fa72-8030-6723-81bccac44a48&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=X6qIrofIOTlU8zIGpVUdzA&origin_airports=1&destination_airports=0&expected_price_source=share&expected_price_currency=ils&expected_price=718&marker=810512",
         "candle_lighting": "16:17",
         "havdalah": "17:25",
-        "land_by": "13:37",
+        "land_by": "14:02",
         "to_center_km": 19,
-        "to_center_min": 70,
+        "to_center_min": 45,
+        "pt_min": 45,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fromania%2F"
       },
@@ -426,9 +431,10 @@
         "link": "https://www.aviasales.com/search/TLV1012ATH13121?t=GQ17969454001796953500000135TLVATH17971536001797231900001305ATHLCATLV_a82501e17ccc121af4ad3b95c1d39c19_18018&search_date=21112026&expected_price_uuid=01a1fe3b-6b68-8031-2fd1-7fd7e9455d65&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=7rIH8F5kIVKgqMVXNTqzxw&expected_price_source=share&expected_price_currency=ils&expected_price=733&marker=810512",
         "candle_lighting": "16:47",
         "havdalah": "17:49",
-        "land_by": "14:22",
+        "land_by": "14:27",
         "to_center_km": 34,
-        "to_center_min": 55,
+        "to_center_min": 50,
+        "pt_min": 45,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fgreece%2F"
       },
@@ -455,6 +461,7 @@
         "land_by": "13:38",
         "to_center_km": 18,
         "to_center_min": 30,
+        "pt_min": 40,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fserbia%2F"
       },
@@ -478,9 +485,10 @@
         "link": "https://www.aviasales.com/search/TLV1012WAW13121?t=W417969289001797066600002355TLVMXPWAW17971455001797249600001675WAWLCATLV_0ff5eeee8f642f4ffff1aaeb051789d3_18931&search_date=23112026&expected_price_uuid=01a20794-6a38-8040-a675-0a57ab622a70&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=ge6xgsZ6b3G_RS1BRUjeBQ&expected_price_source=share&expected_price_currency=ils&expected_price=770&marker=810512",
         "candle_lighting": "15:04",
         "havdalah": "16:23",
-        "land_by": "12:54",
+        "land_by": "12:59",
         "to_center_km": 11,
-        "to_center_min": 40,
+        "to_center_min": 35,
+        "pt_min": 50,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fpoland%2F"
       },
@@ -507,6 +515,7 @@
         "land_by": "13:28",
         "to_center_km": 20,
         "to_center_min": 40,
+        "pt_min": 35,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fhungary%2F"
       },
@@ -531,8 +540,9 @@
         "candle_lighting": "15:19",
         "havdalah": "16:34",
         "land_by": "13:09",
-        "to_center_km": 23,
+        "to_center_km": 17,
         "to_center_min": 40,
+        "pt_min": 30,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fpoland%2F"
       }
@@ -561,6 +571,7 @@
         "land_by": "14:26",
         "to_center_km": 9,
         "to_center_min": 20,
+        "pt_min": 30,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fcyprus%2F"
       },
@@ -569,7 +580,7 @@
         "name": "פאפוס",
         "flag": "🇨🇾",
         "price": 708,
-        "prev_price": 788,
+        "prev_price": 708,
         "out_date": "2026-12-03",
         "out_day": "חמישי",
         "ret_date": "2026-12-06",
@@ -587,6 +598,7 @@
         "land_by": "14:25",
         "to_center_km": 17,
         "to_center_min": 25,
+        "pt_min": 40,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fcyprus%2F"
       },
@@ -610,9 +622,10 @@
         "link": "https://www.aviasales.com/search/TLV1112EVN13121?t=W617969760001797074400001520TLVLCAEVN17971452001797231900001565EVNLCATLV_f0363cce703376fdf4cb7faed0d73147_17724&search_date=19112026&expected_price_uuid=01a1f299-cd73-8030-61b6-22c20340d4cc&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=R4p58PN9OUZ_W4spnGtEtw&expected_price_source=share&expected_price_currency=ils&expected_price=710&marker=810512",
         "candle_lighting": "17:17",
         "havdalah": "18:21",
-        "land_by": "15:02",
+        "land_by": "15:12",
         "to_center_km": 12,
-        "to_center_min": 45,
+        "to_center_min": 35,
+        "pt_min": 60,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Farmenia%2F"
       },
@@ -636,9 +649,10 @@
         "link": "https://www.aviasales.com/search/TLV1012ATH13121?t=GQ17969454001796953500000135TLVATH17971536001797231900001305ATHLCATLV_a82501e17ccc121af4ad3b95c1d39c19_18018&search_date=21112026&expected_price_uuid=01a1fe3b-6b68-8031-2fd1-7fd7e9455d65&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=7rIH8F5kIVKgqMVXNTqzxw&expected_price_source=share&expected_price_currency=ils&expected_price=733&marker=810512",
         "candle_lighting": "16:47",
         "havdalah": "17:49",
-        "land_by": "14:22",
+        "land_by": "14:27",
         "to_center_km": 34,
-        "to_center_min": 55,
+        "to_center_min": 50,
+        "pt_min": 45,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fgreece%2F"
       },
@@ -665,6 +679,7 @@
         "land_by": "13:38",
         "to_center_km": 18,
         "to_center_min": 30,
+        "pt_min": 40,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fserbia%2F"
       },
@@ -688,9 +703,10 @@
         "link": "https://www.aviasales.com/search/TLV1012WAW13121?t=W417969289001797066600002355TLVMXPWAW17971455001797249600001675WAWLCATLV_0ff5eeee8f642f4ffff1aaeb051789d3_18931&search_date=23112026&expected_price_uuid=01a20794-6a38-8040-a675-0a57ab622a70&static_fare_key=TY%7CP0%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=ge6xgsZ6b3G_RS1BRUjeBQ&expected_price_source=share&expected_price_currency=ils&expected_price=770&marker=810512",
         "candle_lighting": "15:04",
         "havdalah": "16:23",
-        "land_by": "12:54",
+        "land_by": "12:59",
         "to_center_km": 11,
-        "to_center_min": 40,
+        "to_center_min": 35,
+        "pt_min": 50,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fpoland%2F"
       },
@@ -714,9 +730,10 @@
         "link": "https://www.aviasales.com/search/TLV1012OTP13121?t=W417969289001797037200001805TLVMXPBGYOTP17971452001797231900001445OTPLCATLV_156be56e14a31bfa61fa3785678d327c_19124&search_date=21112026&expected_price_uuid=01a1ff89-279d-8030-a952-1d0c7ff83093&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=IlXE04FUSA9RnSDQRkfLVA&origin_airports=1&destination_airports=0&expected_price_source=share&expected_price_currency=ils&expected_price=779&marker=810512",
         "candle_lighting": "16:17",
         "havdalah": "17:25",
-        "land_by": "13:37",
+        "land_by": "14:02",
         "to_center_km": 19,
-        "to_center_min": 70,
+        "to_center_min": 45,
+        "pt_min": 45,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fromania%2F"
       },
@@ -741,8 +758,9 @@
         "candle_lighting": "15:19",
         "havdalah": "16:34",
         "land_by": "13:09",
-        "to_center_km": 23,
+        "to_center_km": 17,
         "to_center_min": 40,
+        "pt_min": 30,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fpoland%2F"
       },
@@ -769,6 +787,7 @@
         "land_by": "13:51",
         "to_center_km": 49,
         "to_center_min": 60,
+        "pt_min": 60,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fitaly%2F"
       },
@@ -792,9 +811,10 @@
         "link": "https://www.aviasales.com/search/TLV1012SOF13121?t=W417969289001796988000000985TLVMXPBGYSOF17971926001797231900000655SOFLCATLV_ca8dc1d39b8659f3a9a79c346f3a0d5a_20865&search_date=20112026&expected_price_uuid=01a1f96a-5a4c-8031-2812-f4b36853fe53&static_fare_key=TY%7CP1%7CH0%7CL0%7CCH0%7CR0%7CTBC0&itinerary_key=S5PddZP-QeCwXApskEweaA&expected_price_source=share&expected_price_currency=ils&expected_price=852&marker=810512",
         "candle_lighting": "16:34",
         "havdalah": "17:40",
-        "land_by": "14:44",
+        "land_by": "14:49",
         "to_center_km": 10,
-        "to_center_min": 20,
+        "to_center_min": 15,
+        "pt_min": 30,
         "hotel_link": null,
         "esim_link": "https://tp.media/r?campaign_id=224&marker=810512&p=5998&trs=605567&u=https%3A%2F%2Fyesim.app%2Fcountry%2Fbulgaria%2F"
       }
