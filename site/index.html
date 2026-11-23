@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>טיסות לסופ"ש מתל אביב</title>
+<!-- Travelpayouts Drive -->
+<script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
+  (function () {
+      var script = document.createElement("script");
+      script.async = 1;
+      script.setAttribute("data-cmp-ab","2");
+      script.src = 'https://emrld.ltd/NjA1NTY3.js?t=605567';
+      document.head.appendChild(script);
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #e6f0f7; --ink: #0a2342; --ink-2: #3c5677; --paper: #ffffff;
+    --sun: #c94a0c; --sun-ink: #ffffff; --sea: #08777a; --leaf: #0f7a4b; --line: #d3e1ec;
+    --wa: #0f7d43;
+    --display: "Secular One", "Assistant", system-ui, sans-serif;
+    --body: "Assistant", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--sky); color: var(--ink); font: 17px/1.5 var(--body); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid #ffb703; outline-offset: 2px; box-shadow: 0 0 0 5px var(--ink); }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .skip { position: absolute; top: -60px; right: 12px; z-index: 20; background: #fff; color: var(--ink); font-weight: 800;
+          padding: 10px 16px; border-radius: 10px; text-decoration: none; }
+  .skip:focus { top: 12px; }
+
+  /* ---------- cover: the week's cheapest deal ---------- */
+  .cover { position: relative; min-height: 460px; display: flex; align-items: flex-end;
+           color: #fff; overflow: hidden; background: var(--ink); }
+  .cover .bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .cover::after { content: ""; position: absolute; inset: 0;
+                  background: linear-gradient(to top, rgba(10,35,66,.92) 0%, rgba(10,35,66,.45) 45%, rgba(10,35,66,.15) 100%); }
+  .cover .in { position: relative; z-index: 1; width: 100%; max-width: 1040px; margin: 0 auto; padding: 28px 20px 34px; }
+  .brand { position: absolute; top: 18px; right: 20px; left: 20px; max-width: 1040px; margin: 0 auto; z-index: 1;
+           display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+  .brand .logo { font-family: var(--display); font-size: 20px; }
+  .brand .when { font-size: 14px; opacity: .85; font-weight: 600; }
+  .cover .kicker { font-weight: 700; font-size: 17px; color: #ffd6b8; }
+  .cover h1 { font-family: var(--display); font-weight: 400; font-size: clamp(54px, 11vw, 112px);
+              line-height: .95; margin: 4px 0 14px; letter-spacing: -1px; }
+  .cover .row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+  .cover .big-price { background: var(--sun); color: var(--sun-ink); border-radius: 14px; padding: 8px 18px 10px;
+                      font-family: var(--display); font-size: 40px; line-height: 1; transform: rotate(-2deg); }
+  .cover .big-price small { display: block; font-family: var(--body); font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .cover .facts { font-size: 18px; font-weight: 600; }
+  .cover .cta { background: #fff; color: var(--ink); text-decoration: none; font-weight: 800;
+                padding: 12px 22px; border-radius: 999px; }
+  .credit { position: absolute; bottom: 6px; left: 10px; z-index: 1; font-size: 12px; color: #fff; text-shadow: 0 1px 2px #000; }
+
+  /* ---------- controls ---------- */
+  .controls { position: sticky; top: 0; z-index: 5; background: rgba(230,240,247,.94); backdrop-filter: blur(8px);
+              border-bottom: 1px solid var(--line); }
+  .controls .in { max-width: 1040px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px;
+                  align-items: center; justify-content: space-between; }
+  .seg { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+  .seg button { border: 0; background: transparent; font: inherit; font-weight: 700; color: var(--ink-2);
+                padding: 8px 16px; border-radius: 999px; cursor: pointer; }
+  .seg button.on { background: var(--ink); color: #fff; }
+  .seg.sh button.on[data-list="shabbat"] { background: var(--sea); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); background: #fff; color: var(--ink); font: inherit; font-weight: 600;
+          font-size: 15px; padding: 7px 13px; border-radius: 999px; cursor: pointer; }
+  .chip.on { border-color: var(--sun); background: #fff1e6; color: #a84300; }
+
+  main { max-width: 1040px; margin: 0 auto; padding: 22px 16px 120px; }
+  .demo { background: #fff7cc; border: 1px solid #f1dc7a; color: #6b5300; padding: 10px 14px;
+          border-radius: 10px; margin-bottom: 18px; font-size: 15px; }
+  .count { color: var(--ink-2); font-weight: 600; margin: 0 0 14px; }
+
+  /* ---------- ticket cards ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .ticket { background: var(--paper); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 1px 0 var(--line), 0 10px 24px -18px rgba(10,35,66,.45); }
+  .photo { position: relative; aspect-ratio: 16 / 10; background-size: cover; background-position: center; }
+  .photo::after { content: ""; position: absolute; inset: 0;
+                  background: linear-gradient(to top, rgba(10,35,66,.78), rgba(10,35,66,0) 58%); }
+  .photo .city { position: absolute; z-index: 1; bottom: 10px; right: 14px; color: #fff; margin: 0; font-weight: 400;
+                 font-family: var(--display); font-size: 34px; line-height: 1; }
+  .photo .city span { font-size: 22px; margin-left: 6px; }
+  .photo .tag-price { position: absolute; z-index: 1; top: 12px; left: 12px; background: var(--sun); color: #fff;
+                      font-family: var(--display); font-size: 26px; line-height: 1; padding: 7px 12px 8px;
+                      border-radius: 10px; transform: rotate(-3deg); box-shadow: 0 4px 12px -4px rgba(0,0,0,.35); }
+  .photo .drop { position: absolute; z-index: 1; top: 14px; right: 12px; background: var(--leaf); color: #fff;
+                 font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 999px; }
+  .photo .pc { position: absolute; z-index: 1; bottom: 4px; left: 8px; font-size: 11px; color: #fff; text-shadow: 0 1px 2px #000;
+               max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: none; }
+  /* perforation between the photo and the stub */
+  .perf { height: 18px; position: relative;
+          background: radial-gradient(circle at 0 50%, var(--sky) 9px, transparent 10px) left / 18px 18px no-repeat,
+                      radial-gradient(circle at 100% 50%, var(--sky) 9px, transparent 10px) right / 18px 18px no-repeat; }
+  .perf::before { content: ""; position: absolute; top: 50%; left: 18px; right: 18px; border-top: 2px dashed var(--line); }
+  .stub { padding: 2px 18px 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .fare { display: flex; justify-content: space-between; align-items: baseline; }
+  .fare b { font-size: 15px; } .fare span { color: var(--ink-2); font-size: 14px; font-weight: 600; }
+  .legs { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 15.5px; }
+  .legs dt { color: var(--ink-2); font-weight: 700; } .legs dd { margin: 0; font-weight: 600; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; font-weight: 700; }
+  .pill { background: #eef4f9; color: var(--ink-2); padding: 3px 9px; border-radius: 6px; }
+  .pill.live { background: #e3f4ea; color: var(--leaf); }
+  .pill.sh { background: #e0f3f3; color: #06676a; }
+  .transfer { font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 8px; }
+  .transfer .est { opacity: .85; }
+  .book { margin-top: auto; display: block; text-align: center; background: var(--ink); color: #fff; text-decoration: none;
+          font-weight: 800; font-size: 17px; padding: 12px; border-radius: 12px; }
+  .book:hover { background: #12345f; }
+  .extras { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .extra { display: block; text-align: center; text-decoration: none; font-weight: 700; font-size: 15px;
+           padding: 9px 6px; border-radius: 10px; border: 1.5px solid var(--line); color: var(--ink); background: #f6f9fc; }
+  .extra:hover { border-color: var(--ink-2); }
+  .extras.one { grid-template-columns: 1fr; }
+  .empty { text-align: center; color: var(--ink-2); padding: 60px 0; font-size: 18px; }
+  .wks { margin-top: 8px; }
+  .more { display: block; margin: 24px auto 0; border: 2px solid var(--ink); background: #fff; color: var(--ink);
+    font: inherit; font-weight: 700; font-size: 16px; padding: 12px 28px; border-radius: 999px; cursor: pointer; }
+  .more:hover { background: var(--sky); }
+
+  /* ---------- WhatsApp dock ---------- */
+  .dock { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 6;
+          display: flex; gap: 8px; align-items: center; background: var(--ink); padding: 8px; border-radius: 999px;
+          box-shadow: 0 12px 30px -10px rgba(10,35,66,.6); }
+  .dock button, .dock a { border: 0; font: inherit; font-weight: 800; cursor: pointer; text-decoration: none;
+                          border-radius: 999px; padding: 11px 18px; white-space: nowrap; }
+  .dock .copy { background: var(--wa); color: #fff; }
+  .dock .open { background: transparent; color: #fff; }
+  .toast { position: fixed; bottom: 82px; left: 50%; transform: translateX(-50%); background: #fff; color: var(--leaf);
+           font-weight: 700; padding: 8px 16px; border-radius: 999px; box-shadow: 0 6px 18px -8px rgba(0,0,0,.4);
+           opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 7; }
+  .toast.show { opacity: 1; }
+  footer { color: var(--ink-2); font-size: 13.5px; text-align: center; margin-top: 34px; }
+  textarea.hidden { position: fixed; top: -1000px; }
+
+  @media (max-width: 560px) {
+    .cover { min-height: 420px; }
+    .cover .big-price { font-size: 32px; }
+    .dock .open { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">דלג לרשימת הדילים</a>
+
+<section class="cover" id="cover" aria-label="הדיל הזול ביותר השבוע">
+  <div class="bg" id="coverBg"></div>
+  <div class="brand"><span class="logo">טסים לסופ"ש ✈</span><span class="when" id="when"></span></div>
+  <div class="in" id="coverIn"></div>
+  <a class="credit" id="coverCredit" target="_blank" rel="noopener"></a>
+</section>
+
+<nav class="controls" aria-label="סינון">
+  <div class="in">
+    <div class="seg" id="seg" role="tablist" aria-label="סוג רשימה">
+      <button data-list="general" class="on" role="tab" aria-selected="true">כל הדילים</button>
+      <button data-list="shabbat" role="tab" aria-selected="false">🕯️ לשומרי שבת</button>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="סינון לפי מחיר"></div>
+    <div class="chips wks" id="wks" role="group" aria-label="בחירת סופ״ש"></div>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+  <h2 class="sr-only">רשימת הדילים</h2>
+  <div class="demo" id="demo" hidden>תצוגה עם נתוני דמו. אחרי ההרצה הראשונה עם המפתחות יופיעו כאן מחירים ותמונות אמיתיים.</div>
+  <p class="count" id="count"></p>
+  <div class="grid" id="grid" role="list"></div>
+  <button class="more" id="more" hidden>להציג עוד דילים</button>
+  <footer><p id="foot"></p><p><a href="accessibility.html">הצהרת נגישות</a></p></footer>
+</main>
+
+<div class="dock">
+  <button class="copy" id="copy">העתק לוואטסאפ</button>
+  <a class="open" id="share" target="_blank" rel="noopener" aria-label="שליחת הדילים לקבוצת וואטסאפ (נפתח בחלון חדש)">שלח לקבוצה</a>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const state = { data: null, list: "general", max: null, wk: null, shown: 20 };
+const $ = (s) => document.querySelector(s);
+const nis = (n) => Math.round(n).toLocaleString("he-IL") + " ₪";
+const dm = (iso) => { const [, m, d] = iso.split("-"); return `${+d}/${+m}`; };
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+// רקע חלופי כשאין תמונה: גוון קבוע לכל יעד
+function fallbackBg(code) {
+  let h = 0; for (const ch of code) h = (h * 31 + ch.charCodeAt(0)) % 360;
+  return `linear-gradient(135deg, hsl(${h} 42% 40%), hsl(${(h + 30) % 360} 55% 22%))`;
+}
+function photoStyle(code) {
+  const p = (state.data.photos || {})[code];
+  return p && p.url ? `background-image:url('${esc(p.url)}'), ${fallbackBg(code)}` : `background-image:${fallbackBg(code)}`;
+}
+function creditHtml(code, cls) {
+  const p = (state.data.photos || {})[code];
+  if (!p || !p.url) return "";
+  return `<a class="${cls}" href="${esc(p.source)}" target="_blank" rel="noopener">צילום: ${esc(p.credit || "ויקישיתוף")}${p.license ? ", " + esc(p.license) : ""}</a>`;
+}
+
+function deals() {
+  const all = state.data.lists[state.list] || [];
+  return all.filter(d => (!state.max || d.price <= state.max) && (!state.wk || d.weekend === state.wk));
+}
+const perWay = (d) => nis(d.price / 2);
+function wkLabel(iso) {
+  const t = new Date(iso + "T12:00:00"); const s = new Date(t.getTime() + 3 * 864e5);
+  return `${t.getDate()}/${t.getMonth() + 1} עד ${s.getDate()}/${s.getMonth() + 1}`;
+}
+function retText(d) {
+  if (d.ret_dep) return d.ret_dep;
+  if (d.ret_from_hour != null) return `אחרי ${String(d.ret_from_hour).padStart(2, "0")}:00`;
+  return "";
+}
+const drop = (d) => d.prev_price && d.prev_price > d.price ? d.prev_price - d.price : 0;
+
+function renderCover() {
+  const d = deals()[0];
+  const sh = state.list === "shabbat";
+  if (!d) { $("#coverIn").innerHTML = `<h1>אין דילים בטווח הזה</h1>`; $("#coverBg").style.cssText = ""; return; }
+  $("#coverBg").setAttribute("style", photoStyle(d.dest));
+  $("#coverIn").innerHTML = `
+    <div class="kicker">${sh ? "הכי זול השבוע לשומרי שבת" : "הכי זול השבוע"}</div>
+    <h1>${esc(d.name)}</h1>
+    <div class="row">
+      <div class="big-price">${nis(d.price)}<small>הלוך-חזור · כ-${perWay(d)} לכיוון</small></div>
+      <div class="facts">${d.out_day} ${dm(d.out_date)} עד ${d.ret_day} ${dm(d.ret_date)}<br>${d.stops ? "עצירה אחת" : "טיסה ישירה"}${drop(d) ? ` · ירד ${nis(drop(d))} מהבדיקה הקודמת` : ""}</div>
+      ${d.link ? `<a class="cta" href="${esc(d.link)}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
+    </div>`;
+  const p = (state.data.photos || {})[d.dest];
+  const c = $("#coverCredit");
+  if (p && p.url) { c.href = p.source; c.textContent = `צילום: ${p.credit || "ויקישיתוף"}${p.license ? ", " + p.license : ""}`; }
+  else { c.removeAttribute("href"); c.textContent = ""; }
+}
+
+function card(d) {
+  const sh = state.list === "shabbat";
+  const out = `${d.out_day} ${dm(d.out_date)}, ${d.out_dep || ""}${d.out_arr ? ` (נוחת ${d.out_arr})` : ""}`;
+  return `<article class="ticket" role="listitem">
+    <div class="photo" style="${photoStyle(d.dest)}" role="img" aria-label="צילום מ${esc(d.name)}">
+      ${drop(d) ? `<span class="drop">ירד ${nis(drop(d))}</span>` : ""}
+      <span class="tag-price">${nis(d.price)}</span>
+      <h3 class="city">${esc(d.name)}<span aria-hidden="true">${d.flag}</span></h3>
+      ${creditHtml(d.dest, "pc")}
+    </div>
+    <div class="perf" aria-hidden="true"></div>
+    <div class="stub">
+      <div class="fare"><b>הלוך-חזור לאדם</b><span>כ-${perWay(d)} לכיוון</span></div>
+      <dl class="legs"><dt>הלוך</dt><dd>${out}</dd><dt>חזור</dt><dd>${d.ret_day} ${dm(d.ret_date)}, ${retText(d)}</dd></dl>
+      ${d.to_center_min ? `<p class="transfer">מהשדה למרכז העיר (${d.to_center_km} ק״מ): 🚕 ברכב/מונית כ-${d.to_center_min} דק׳${d.pt_min ? ` · 🚆 בתחבורה ציבורית כ-${d.pt_min} דק׳` : ""} <span class="est">(זמן משוער)</span>${sh ? `<br>זמני השבת חושבו לפי נסיעה במונית עד מרכז העיר.` : ""}</p>` : ""}
+      <div class="pills">
+        <span class="pill">${d.stops ? "עצירה אחת" : "ישירה"}</span>
+        ${d.airline ? `<span class="pill">${esc(d.airline)}</span>` : ""}
+        <span class="pill ${d.source === "live" ? "live" : ""}">${d.source === "live" ? "מחיר חי" : "מחיר מ-48 שעות אחרונות"}</span>
+        ${sh ? `<span class="pill sh">נרות ${d.candle_lighting} · צאת שבת ${d.havdalah}</span>` : ""}
+      </div>
+      ${d.link ? `<a class="book" href="${esc(d.link)}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
+      ${extrasHtml(d)}
+    </div>
+  </article>`;
+}
+
+function extrasHtml(d) {
+  const items = [];
+  if (d.hotel_link) items.push(`<a class="extra" href="${esc(d.hotel_link)}" target="_blank" rel="noopener" aria-label="מלונות ב${esc(d.name)} לתאריכי הטיסה (נפתח בחלון חדש)">🏨 מלון ב${esc(d.name)}</a>`);
+  if (d.esim_link) items.push(`<a class="extra" href="${esc(d.esim_link)}" target="_blank" rel="noopener" aria-label="eSIM לגלישה ב${esc(d.name)} (נפתח בחלון חדש)">📱 eSIM לגלישה</a>`);
+  return items.length ? `<div class="extras${items.length === 1 ? " one" : ""}">${items.join("")}</div>` : "";
+}
+
+function whatsappText() {
+  const all = deals(); const list = all.slice(0, 10);
+  const w = state.wk ? [state.wk] : state.data.weekends;
+  const title = state.list === "shabbat" ? "✈️🕯️ *דילים לסופ\"ש – לשומרי שבת*" : "✈️ *דילים לסופ\"ש מתל אביב*";
+  const lines = [title, `לסופ"שים של ${w.map(wkLabel).join(", ")}` + (state.max ? `, עד ${nis(state.max)}` : ""), ""];
+  list.forEach((d, i) => {
+    const dropTxt = drop(d) ? ` 🔻 ירד ${nis(drop(d))}` : "";
+    lines.push(`${i + 1}. ${d.flag} *${d.name}* – ${nis(d.price)} הלוך-חזור (כ-${perWay(d)} לכיוון)${dropTxt}`);
+    lines.push(`   ${d.out_day} ${dm(d.out_date)} ${d.out_dep || ""} ⬅️ ${d.ret_day} ${dm(d.ret_date)} ${retText(d)}, ${d.stops ? "עצירה אחת" : "ישירה"}`);
+    if (state.list === "shabbat") lines.push(`   🕯️ נרות ${d.candle_lighting}, צאת שבת ${d.havdalah}${d.to_center_min ? ` (כולל כ-${d.to_center_min} דק׳ משוערות במונית מהשדה למרכז העיר)` : ""}`);
+    if (d.link) lines.push(`   ${d.link}`);
+    lines.push("");
+  });
+  if (all.length > list.length) lines.push(`ועוד ${all.length - list.length} דילים באתר 👇`);
+  if (state.data.site_url) lines.push(`כל הדילים עם תמונות: ${state.data.site_url}`);
+  lines.push("_המחירים לאדם, נכונים לשעת הבדיקה ועשויים להשתנות._");
+  return lines.join("\n");
+}
+
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); return true; }
+  catch (e) {
+    const ta = document.createElement("textarea"); ta.className = "hidden"; ta.value = t;
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch (e2) {}
+    ta.remove(); return ok;
+  }
+}
+function toast(msg) {
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("show"), 2800);
+}
+
+function render() {
+  const list = deals();
+  renderCover();
+  const rest = list.slice(1, state.shown);
+  $("#count").textContent = list.length ? `${list.length} דילים${state.wk ? ` לסופ"ש ${wkLabel(state.wk)}` : ""}${state.max ? ` עד ${nis(state.max)}` : ""}` : "";
+  $("#grid").innerHTML = list.length ? rest.map(card).join("") :
+    `<div class="empty">אין דילים שמתאימים לסינון. אפשר לבחור סופ"ש אחר או תקרת מחיר גבוהה יותר.</div>`;
+  const left = list.length - state.shown;
+  $("#more").hidden = left <= 0;
+  $("#more").textContent = `להציג עוד ${Math.min(left, 20)} דילים (נשארו ${left})`;
+  document.querySelectorAll("#wks .chip").forEach(b => { const on = (b.dataset.wk || null) === state.wk; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+  $("#share").href = "https://wa.me/?text=" + encodeURIComponent(whatsappText());
+  document.querySelectorAll("#seg button").forEach(b => { const on = b.dataset.list === state.list; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
+  $("#seg").classList.toggle("sh", state.list === "shabbat");
+  document.querySelectorAll("#chips .chip").forEach(b => { const on = (+b.dataset.max || null) === state.max; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+}
+
+function init(data) {
+  state.data = data;
+  const gen = new Date(data.generated_at);
+  $("#when").textContent = `עודכן ${gen.toLocaleDateString("he-IL", {day: "numeric", month: "numeric"})} · ${data.weekends.length} סופ"שים קדימה`;
+  $("#demo").hidden = !data.demo;
+  $("#chips").innerHTML = [`<button class="chip on" data-max="">כל המחירים</button>`]
+    .concat(data.price_filters.map(p => `<button class="chip" data-max="${p}">עד ${nis(p)}</button>`)).join("");
+  $("#wks").innerHTML = [`<button class="chip on" data-wk="">כל הסופ"שים</button>`]
+    .concat(data.weekends.map((w, i) => `<button class="chip" data-wk="${w}">${i === 0 ? "הקרוב: " : ""}${wkLabel(w)}</button>`)).join("");
+  document.querySelectorAll("#chips .chip").forEach(b => b.onclick = () => { state.max = +b.dataset.max || null; state.shown = 20; render(); });
+  document.querySelectorAll("#wks .chip").forEach(b => b.onclick = () => { state.wk = b.dataset.wk || null; state.shown = 20; render(); });
+  document.querySelectorAll("#seg button").forEach(b => b.onclick = () => { state.list = b.dataset.list; state.shown = 20; render(); });
+  $("#more").onclick = () => { state.shown += 20; render(); };
+  $("#copy").onclick = async () => {
+    toast(await copyText(whatsappText()) ? "הועתק. עכשיו מדביקים בקבוצה" : "ההעתקה לא עבדה. נסו את \"שלח לקבוצה\"");
+  };
+  $("#foot").textContent = "המחירים לאדם, בשקלים. השעות לפי השעון המקומי. זמני שבת מחושבים לפי השקיעה ביעד, כדאי לוודא מול לוח מקומי. התמונות מוויקישיתוף. חלק מהקישורים הם קישורי שותפים: אנחנו עשויים לקבל עמלה, בלי עלות נוספת עבורכם.";
+  render();
+}
+
+if (window.DEALS_DATA) init(window.DEALS_DATA);
+else fetch("data/deals.json", {cache: "no-store"}).then(r => r.json()).then(init)
+  .catch(() => { $("#coverIn").innerHTML = "<h1>הדילים לא נטענו</h1><p>רעננו את הדף בעוד דקה.</p>"; });
+</script>
+<script src="a11y.js"></script>
+</body>
+</html>
