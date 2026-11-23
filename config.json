@@ -1,0 +1,45 @@
+{
+  "site_url": "https://yg-weekend.github.io",
+  "origin": "TLV",
+  "currency": "ILS",
+  "weekends_ahead": [
+    0,
+    1,
+    2
+  ],
+  "travelpayouts_trs": 605567,
+  "max_price": 1500,
+  "price_filters": [
+    600,
+    900,
+    1200
+  ],
+  "max_stops": 1,
+  "earliest_departure_hour": 6,
+  "latest_departure_hour": 23,
+  "deals_per_list": 10,
+  "serpapi_max_calls_per_run": 4,
+  "shabbat": {
+    "candle_lighting_minutes_before_sunset": 18,
+    "land_hours_before_candle_lighting": 3,
+    "tzeit_sun_depression_degrees": 8.5,
+    "hours_after_tzeit_to_depart": 2
+  },
+  "destinations": [
+    {"code": "ATH", "name": "אתונה", "flag": "🇬🇷", "lat": 37.98, "lon": 23.73, "tz": "Europe/Athens", "serpapi_airports": "ATH", "photo": "Acropolis of Athens", "city_en": "Athens", "esim_slug": "greece"},
+    {"code": "RHO", "name": "רודוס", "flag": "🇬🇷", "lat": 36.43, "lon": 28.22, "tz": "Europe/Athens", "serpapi_airports": "RHO", "photo": "Lindos", "city_en": "Rhodes", "esim_slug": "greece"},
+    {"code": "SKG", "name": "סלוניקי", "flag": "🇬🇷", "lat": 40.64, "lon": 22.94, "tz": "Europe/Athens", "serpapi_airports": "SKG", "photo": "White Tower of Thessaloniki", "city_en": "Thessaloniki", "esim_slug": "greece"},
+    {"code": "LCA", "name": "לרנקה", "flag": "🇨🇾", "lat": 34.92, "lon": 33.63, "tz": "Asia/Nicosia", "serpapi_airports": "LCA", "photo": "Hala Sultan Tekke", "city_en": "Larnaca", "esim_slug": "cyprus"},
+    {"code": "PFO", "name": "פאפוס", "flag": "🇨🇾", "lat": 34.77, "lon": 32.42, "tz": "Asia/Nicosia", "serpapi_airports": "PFO", "photo": "Petra tou Romiou", "city_en": "Paphos", "esim_slug": "cyprus"},
+    {"code": "ROM", "name": "רומא", "flag": "🇮🇹", "lat": 41.9, "lon": 12.5, "tz": "Europe/Rome", "serpapi_airports": "FCO,CIA", "photo": "Colosseum", "city_en": "Rome", "esim_slug": "italy"},
+    {"code": "MIL", "name": "מילאנו", "flag": "🇮🇹", "lat": 45.46, "lon": 9.19, "tz": "Europe/Rome", "serpapi_airports": "MXP,BGY,LIN", "photo": "Milan Cathedral", "city_en": "Milan", "esim_slug": "italy"},
+    {"code": "PRG", "name": "פראג", "flag": "🇨🇿", "lat": 50.08, "lon": 14.44, "tz": "Europe/Prague", "serpapi_airports": "PRG", "photo": "Charles Bridge", "city_en": "Prague", "esim_slug": ""},
+    {"code": "BUD", "name": "בודפשט", "flag": "🇭🇺", "lat": 47.5, "lon": 19.04, "tz": "Europe/Budapest", "serpapi_airports": "BUD", "photo": "Hungarian Parliament Building", "city_en": "Budapest", "esim_slug": "hungary"},
+    {"code": "VIE", "name": "וינה", "flag": "🇦🇹", "lat": 48.21, "lon": 16.37, "tz": "Europe/Vienna", "serpapi_airports": "VIE", "photo": "Schönbrunn Palace", "city_en": "Vienna", "esim_slug": "austria"},
+    {"code": "BER", "name": "ברלין", "flag": "🇩🇪", "lat": 52.52, "lon": 13.4, "tz": "Europe/Berlin", "serpapi_airports": "BER", "photo": "Brandenburg Gate", "city_en": "Berlin", "esim_slug": "germany"},
+    {"code": "BUS", "name": "בטומי", "flag": "🇬🇪", "lat": 41.64, "lon": 41.63, "tz": "Asia/Tbilisi", "serpapi_airports": "BUS", "photo": "Batumi", "city_en": "Batumi", "esim_slug": "georgia"},
+    {"code": "TBS", "name": "טביליסי", "flag": "🇬🇪", "lat": 41.72, "lon": 44.79, "tz": "Asia/Tbilisi", "serpapi_airports": "TBS", "photo": "Narikala", "city_en": "Tbilisi", "esim_slug": "georgia"},
+    {"code": "SOF", "name": "סופיה", "flag": "🇧🇬", "lat": 42.7, "lon": 23.32, "tz": "Europe/Sofia", "serpapi_airports": "SOF", "photo": "Alexander Nevsky Cathedral, Sofia", "city_en": "Sofia", "esim_slug": "bulgaria"},
+    {"code": "OTP", "name": "בוקרשט", "flag": "🇷🇴", "lat": 44.43, "lon": 26.1, "tz": "Europe/Bucharest", "serpapi_airports": "OTP", "photo": "Romanian Athenaeum", "city_en": "Bucharest", "esim_slug": "romania"}
+  ]
+}
