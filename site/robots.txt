@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yg-weekend.github.io/sitemap.xml
