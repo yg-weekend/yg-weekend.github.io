@@ -50,7 +50,16 @@
   .skip:focus { top: 12px; }
 
   /* ---------- cover: the week's cheapest deal ---------- */
-  .cover { position: relative; color: #fff; background: linear-gradient(160deg, #0a2342 0%, #0d3a5c 62%, #08777a 135%); }
+  .cover { position: relative; color: #fff; background: linear-gradient(to bottom, #050d1c 0%, #081a33 100%); overflow: hidden; }
+  /* תמונת האווירה של האתר: זריחה מחלון המטוס. יושבת מאחורי הכותרת ונמוגה לפני המשבצות */
+  .cover .sky { position: absolute; top: 0; left: 0; right: 0; height: 340px;
+                background: linear-gradient(rgba(5,13,28,.25), rgba(5,13,28,.25)),
+                            url("https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Flying_through_the_sunrise_-_Flickr_-_Lenny_K_Photography.jpg/1280px-Flying_through_the_sunrise_-_Flickr_-_Lenny_K_Photography.jpg") center 61% / cover no-repeat;
+                -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+                        mask-image: linear-gradient(to bottom, #000 62%, transparent 100%); }
+  .cover .sky-credit { position: absolute; bottom: 5px; left: 10px; z-index: 1; font-size: 11px; color: #fff; opacity: .7;
+                       text-decoration: none; }
+  .cover h1, .cover .kicker, .cover .lede { text-shadow: 0 1px 8px rgba(0,0,0,.55); }
   .cover .in { position: relative; z-index: 1; width: 100%; max-width: 1040px; margin: 0 auto; padding: 70px 20px 30px; }
   .cover .lede { margin: 0 0 18px; font-size: 17px; font-weight: 600; opacity: .92; max-width: 560px; }
   /* ארבע משבצות: הזול ביותר לכל סופ"ש */
@@ -205,6 +214,8 @@
 <a class="skip" href="#main">דלג לרשימת הדילים</a>
 
 <section class="cover" id="cover" aria-label="הזול ביותר לכל סופ״ש">
+  <div class="sky" role="img" aria-label="זריחה מעל העננים מחלון מטוס"></div>
+  <a class="sky-credit" href="https://commons.wikimedia.org/wiki/File:Flying_through_the_sunrise_-_Flickr_-_Lenny_K_Photography.jpg" target="_blank" rel="noopener">צילום רקע: Lenny K Photography, CC BY 2.0</a>
   <div class="brand"><span class="logo">טסים לסופ"ש ✈</span><span class="when" id="when"></span></div>
   <div class="in" id="coverIn"></div>
 </section>

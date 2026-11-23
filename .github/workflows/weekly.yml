@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: "0 5,14 * * *"  # כל יום 05:00 ו-14:00 UTC = 07:00 ו-16:00 בחורף (08:00 ו-17:00 בקיץ)
   workflow_dispatch:          # כפתור "Run workflow" להרצה ידנית
+  push:                       # כל שינוי בקבצי האתר מתפרסם מיד, בלי חיפוש דילים מחדש
+    branches: [main]
+    paths: ["site/**"]
 
 permissions:
   contents: write
@@ -30,6 +33,7 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: חיפוש דילים
+        if: github.event_name != 'push'
         env:
           TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
           TRAVELPAYOUTS_MARKER: ${{ secrets.TRAVELPAYOUTS_MARKER }}
@@ -37,6 +41,7 @@ jobs:
         run: python engine/finder.py
 
       - name: שמירת התוצאות וההיסטוריה
+        if: github.event_name != 'push'
         run: |
           git config user.name "deals-bot"
           git config user.email "deals-bot@users.noreply.github.com"
