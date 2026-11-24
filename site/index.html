@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>טיסות לסופ"ש מתל אביב</title>
+<title>YG Weekend · טיסות זולות לסופ"ש מתל אביב</title>
 <meta name="description" content="הטיסות הכי זולות לסופ״ש מתל אביב, מתעדכן פעמיים ביום. כולל רשימה מיוחדת לשומרי שבת עם זמני כניסת ויציאת שבת ביעד.">
 <link rel="canonical" href="https://yg-weekend.github.io/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0a2342">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="he_IL">
-<meta property="og:site_name" content="טסים לסופ״ש">
-<meta property="og:title" content="טסים לסופ״ש: הטיסות הכי זולות מתל אביב">
+<meta property="og:site_name" content="YG Weekend">
+<meta property="og:title" content="YG Weekend: הטיסות הכי זולות לסופ״ש מתל אביב">
 <meta property="og:description" content="דילים לסופ״ש הקרוב ולשבועות הבאים, מתעדכן פעמיים ביום. כולל רשימה לשומרי שבת.">
 <meta property="og:url" content="https://yg-weekend.github.io/">
 <meta property="og:image" content="https://yg-weekend.github.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"טסים לסופ״ש","url":"https://yg-weekend.github.io/","inLanguage":"he","description":"הטיסות הכי זולות לסופ״ש מתל אביב, כולל רשימה לשומרי שבת."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"YG Weekend","url":"https://yg-weekend.github.io/","inLanguage":"he","description":"הטיסות הכי זולות לסופ״ש מתל אביב, כולל רשימה לשומרי שבת."}</script>
 <!-- Travelpayouts Drive -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -68,9 +68,10 @@
   .cover .lede { margin: 0 0 18px; font-size: 16.5px; font-weight: 600; opacity: .92; max-width: 560px; }
   .brand { position: absolute; top: 16px; right: 20px; left: 20px; max-width: 1040px; margin: 0 auto; z-index: 1;
            display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
-  .brand .logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-size: 20px; }
+  .brand .logo { white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-size: 20px; }
   .brand .logo svg { width: 30px; height: 30px; flex: none; }
-  .brand .when { font-size: 13.5px; opacity: .85; font-weight: 600; }
+  .brand .when { font-size: 13.5px; opacity: .85; font-weight: 600; text-align: left; }
+  @media (max-width: 480px) { .brand .when .wk-n { display: none; } }
   /* ארבע משבצות: הזול ביותר לכל סופ"ש */
   .wk-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .wk-tile { position: relative; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; background-size: cover; }
@@ -199,7 +200,7 @@
 <section class="cover" id="cover" aria-label="הזול ביותר לכל סופ״ש">
   <div class="sky" role="img" aria-label="זריחה מעל העננים מחלון מטוס"></div>
   <a class="sky-credit" href="https://commons.wikimedia.org/wiki/File:Flying_through_the_sunrise_-_Flickr_-_Lenny_K_Photography.jpg" target="_blank" rel="noopener">צילום רקע: Lenny K Photography, CC BY 2.0</a>
-  <div class="brand"><span class="logo"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#c2410c"/><path fill="#fff" d="M54 12c-3-3-8-2-11 1l-8 8-22-6-4 4 18 10-8 9-7-1-3 3 9 4 4 9 3-3-1-7 9-8 10 18 4-4-6-22 8-8c3-3 4-8 1-11z"/></svg>טסים לסופ״ש</span><span class="when" id="when"></span></div>
+  <div class="brand"><span class="logo"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#c2410c"/><path fill="#fff" d="M54 12c-3-3-8-2-11 1l-8 8-22-6-4 4 18 10-8 9-7-1-3 3 9 4 4 9 3-3-1-7 9-8 10 18 4-4-6-22 8-8c3-3 4-8 1-11z"/></svg><span dir="ltr">YG Weekend</span></span><span class="when" id="when"></span></div>
   <div class="in" id="coverIn"></div>
 </section>
 
@@ -497,10 +498,20 @@ function render() {
   const dr = $("#direct"); if (dr) { dr.classList.toggle("on", state.direct); dr.setAttribute("aria-pressed", state.direct); }
 }
 
+// "עודכן היום ב-07:57" / "עודכן אתמול ב-16:05" / "עודכן 22/11 ב-07:57", לפי שעון ישראל
+function updatedText(gen) {
+  const tz = "Asia/Jerusalem";
+  const day = (t) => t.toLocaleDateString("en-CA", {timeZone: tz});
+  const time = gen.toLocaleTimeString("he-IL", {timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: false});
+  const now = new Date(), y = new Date(now.getTime() - 864e5);
+  const d = day(gen) === day(now) ? "היום" : day(gen) === day(y) ? "אתמול" : gen.toLocaleDateString("he-IL", {timeZone: tz, day: "numeric", month: "numeric"});
+  return `עודכן ${d} ב-${time}`;
+}
+
 function init(data) {
   state.data = data;
   const gen = new Date(data.generated_at);
-  $("#when").textContent = `עודכן ${gen.toLocaleDateString("he-IL", {day: "numeric", month: "numeric"})} · ${data.weekends.length} סופ"שים קדימה`;
+  $("#when").innerHTML = `${updatedText(gen)}<span class="wk-n"> · ${data.weekends.length} סופ"שים קדימה</span>`;
   $("#demo").hidden = !data.demo;
   $("#chips").innerHTML = [`<button class="chip on" data-max="">כל המחירים</button>`]
     .concat(data.price_filters.map(p => `<button class="chip" data-max="${p}">עד ${nis(p)}</button>`))
