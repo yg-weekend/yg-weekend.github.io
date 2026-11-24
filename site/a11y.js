@@ -5,10 +5,10 @@
   try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
 
   var css = ""
-    + ".a11y-btn{position:fixed;bottom:16px;right:16px;z-index:50;width:52px;height:52px;border-radius:50%;border:0;"
+    + ".a11y-btn{position:fixed;bottom:12px;left:12px;z-index:50;width:42px;height:42px;opacity:.85;border-radius:50%;border:0;"
     + "background:#0b1f3a;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px -6px rgba(0,0,0,.5)}"
     + ".a11y-btn:focus-visible,.a11y-panel button:focus-visible,.a11y-panel a:focus-visible{outline:3px solid #ffb703;outline-offset:2px}"
-    + ".a11y-panel{position:fixed;bottom:78px;right:16px;z-index:50;width:250px;background:#fff;color:#0a2342;border-radius:14px;"
+    + ".a11y-panel{position:fixed;bottom:62px;left:12px;z-index:50;width:250px;background:#fff;color:#0a2342;border-radius:14px;"
     + "box-shadow:0 12px 30px -8px rgba(0,0,0,.45);padding:14px;font:600 16px/1.4 Assistant,system-ui,Arial,sans-serif;direction:rtl}"
     + ".a11y-panel[hidden]{display:none}"
     + ".a11y-panel h2{font-size:18px;margin:0 0 10px}"
@@ -20,7 +20,7 @@
     + "html.a11y-contrast body{filter:contrast(1.35)}"
     + "html.a11y-links a{text-decoration:underline !important;outline:2px dashed #ffb703;outline-offset:2px}"
     + "html.a11y-still *,html.a11y-still *::before,html.a11y-still *::after{animation:none !important;transition:none !important}"
-    + "@media (max-width:560px){.a11y-btn{bottom:84px}.a11y-panel{bottom:146px}}";
+    + ".a11y-btn:hover,.a11y-btn:focus-visible{opacity:1}";
   var style = document.createElement("style");
   style.textContent = css;
   document.head.appendChild(style);
@@ -46,7 +46,7 @@
   btn.setAttribute("aria-label", "תפריט נגישות");
   btn.setAttribute("aria-expanded", "false");
   btn.setAttribute("aria-controls", "a11y-panel");
-  btn.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="4" r="1"/><path d="m18 19 1-7-6 1"/><path d="m5 8 3-3 5.5 3-2.36 3.5"/><path d="M4.24 14.5a5 5 0 0 0 6.88 6"/><path d="M13.76 17.5a5 5 0 0 0-6.88-6"/></svg>';
+  btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="4" r="1"/><path d="m18 19 1-7-6 1"/><path d="m5 8 3-3 5.5 3-2.36 3.5"/><path d="M4.24 14.5a5 5 0 0 0 6.88 6"/><path d="M13.76 17.5a5 5 0 0 0-6.88-6"/></svg>';
 
   var panel = document.createElement("div");
   panel.className = "a11y-panel";
