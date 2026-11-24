@@ -1,0 +1,27 @@
+name: תמונות יעדים
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["engine/gallery.py", ".github/workflows/photos.yml", "config.json"]
+
+permissions:
+  contents: write
+
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python engine/gallery.py
+      - run: |
+          git config user.name "deals-bot"
+          git config user.email "deals-bot@users.noreply.github.com"
+          git pull --rebase
+          git add site/img/gallery site/data/gallery.json
+          git commit -m "תמונות יעדים $(date +%F)" || echo "אין שינוי"
+          git push
