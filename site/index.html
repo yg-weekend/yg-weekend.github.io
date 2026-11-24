@@ -232,7 +232,8 @@
     </div>
     <div class="chips days" id="days" role="group" aria-label="יום היציאה" hidden></div>
     <label class="sr-only" for="q">חיפוש יעד, מדינה או תאריך</label>
-    <input id="q" class="search" type="search" autocomplete="off" placeholder="🔎 חיפוש יעד, מדינה או תאריך (למשל: רומא, יוון, 3/12)">
+    <input id="q" class="search" type="search" autocomplete="off" list="qlist" placeholder="🔎 חיפוש עיר, מדינה או תאריך (למשל: רומא, יוון, 3/12)">
+    <datalist id="qlist"></datalist>
     <div class="chips" id="chips" role="group" aria-label="סינון לפי מחיר"></div>
     <div class="chips wks" id="wks" role="group" aria-label="בחירת סופ״ש"></div>
   </div>
@@ -254,13 +255,21 @@
 const state = { data: null, list: "general", max: null, wk: null, shown: 20, q: "", mode: "weekend", day: null, direct: false };
 const DAYS = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
 const wday = (iso) => new Date(iso + "T12:00:00").getDay();
-const COUNTRY = {"🇬🇷":"יוון","🇮🇹":"איטליה","🇨🇾":"קפריסין","🇨🇿":"צ'כיה","🇭🇺":"הונגריה","🇦🇹":"אוסטריה","🇩🇪":"גרמניה",
-  "🇬🇪":"גאורגיה","🇧🇬":"בולגריה","🇷🇴":"רומניה","🇲🇹":"מלטה","🇩🇰":"דנמרק","🇵🇱":"פולין","🇷🇸":"סרביה","🇳🇱":"הולנד",
-  "🇬🇧":"אנגליה בריטניה","🇫🇷":"צרפת","🇦🇲":"ארמניה","🇦🇪":"איחוד האמירויות אמירויות"};
+// לכל דגל: שם המדינה כפי שמוצג, ואחרי הקו שמות נוספים שאנשים מקלידים בחיפוש (כתיב אחר, אנגלית)
+const COUNTRY = {"🇬🇷":"יוון|יון greece","🇮🇹":"איטליה|italy","🇨🇾":"קפריסין|cyprus","🇨🇿":"צ'כיה|צכיה czech czechia","🇭🇺":"הונגריה|hungary",
+  "🇦🇹":"אוסטריה|austria","🇩🇪":"גרמניה|germany","🇬🇪":"גאורגיה|גיאורגיה גרוזיה georgia","🇧🇬":"בולגריה|bulgaria","🇷🇴":"רומניה|romania",
+  "🇲🇹":"מלטה|malta","🇩🇰":"דנמרק|denmark","🇵🇱":"פולין|poland","🇷🇸":"סרביה|serbia","🇳🇱":"הולנד|netherlands holland",
+  "🇬🇧":"אנגליה|בריטניה england britain uk","🇫🇷":"צרפת|france","🇦🇲":"ארמניה|armenia","🇦🇪":"איחוד האמירויות|אמירויות דובאי emirates uae",
+  "🇪🇸":"ספרד|spain","🇵🇹":"פורטוגל|portugal","🇧🇪":"בלגיה|belgium","🇨🇭":"שווייץ|שוויץ switzerland","🇲🇩":"מולדובה|moldova",
+  "🇲🇪":"מונטנגרו|montenegro","🇦🇱":"אלבניה|albania","🇭🇷":"קרואטיה|croatia","🇸🇮":"סלובניה|slovenia","🇸🇰":"סלובקיה|slovakia",
+  "🇹🇷":"טורקיה|תורכיה turkey","🇦🇿":"אזרבייג'ן|אזרביגן azerbaijan","🇱🇹":"ליטא|lithuania","🇱🇻":"לטביה|latvia","🇪🇪":"אסטוניה|estonia",
+  "🇮🇪":"אירלנד|ireland","🇸🇪":"שוודיה|שבדיה sweden","🇳🇴":"נורווגיה|נורבגיה norway","🇫🇮":"פינלנד|finland","🇲🇰":"מקדוניה|macedonia",
+  "🇧🇦":"בוסניה|bosnia","🇲🇦":"מרוקו|morocco","🇪🇬":"מצרים|egypt","🇯🇴":"ירדן|jordan"};
+const countryName = (flag) => (COUNTRY[flag] || "").split("|")[0];
 function matchQ(d) {
   if (!state.q) return true;
   const q = state.q.toLowerCase().replace(/\./g, "/").replace(/["׳״']/g, "");
-  const hay = [d.name, d.dest, COUNTRY[d.flag] || "", dm(d.out_date), dm(d.ret_date)].join(" ").toLowerCase().replace(/["׳״']/g, "");
+  const hay = [d.name, d.dest, (COUNTRY[d.flag] || "").replace("|", " "), dm(d.out_date), dm(d.ret_date)].join(" ").toLowerCase().replace(/["׳״']/g, "");
   const dates = [dm(d.out_date), dm(d.ret_date)];
   return q.split(/\s+/).every(w => w.includes("/") ? dates.includes(w.split("/").map(x => +x).join("/")) : hay.includes(w));
 }
@@ -406,6 +415,7 @@ function card(d, i) {
       ${saveHtml(d)}
       ${d.to_center_min ? `<p class="transfer">מהשדה למרכז העיר (${d.to_center_km} ק״מ): 🚕 ברכב/מונית כ-${d.to_center_min} דק׳${d.pt_min ? ` · 🚆 בתחבורה ציבורית כ-${d.pt_min} דק׳` : ""} <span class="est">(זמן משוער)</span>${sh ? `<br>זמני השבת חושבו לפי נסיעה במונית עד מרכז העיר.` : ""}</p>` : ""}
       <div class="pills">
+        ${countryName(d.flag) ? `<span class="pill">${esc(countryName(d.flag))}</span>` : ""}
         <span class="pill">${d.stops ? "עצירה אחת" : "ישירה"}</span>
         ${d.airline ? `<span class="pill">${esc(airlineName(d.airline))}</span>` : ""}
         <span class="pill ${d.source === "live" ? "live" : ""}">${d.source === "live" ? "מחיר חי" : "מחיר מ-48 שעות אחרונות"}</span>
@@ -526,6 +536,17 @@ function init(data) {
     $("#kiwi").innerHTML = `רוצים לבדוק עוד אפשרויות? אפשר לחפש גם ב-<a href="${esc(data.kiwi_link)}" target="_blank" rel="noopener">Kiwi.com</a> (נפתח בחלון חדש). שם יש גם שילובים של חברות תעופה שונות להלוך ולחזור.`;
     $("#kiwi").hidden = false;
   }
+  // הצעות בזמן הקלדה: קודם המדינות שיש אליהן דילים (עם הערים שלהן), ואחריהן הערים
+  const byCountry = new Map(), cities = new Set();
+  Object.values(data.lists).forEach(l => l.forEach(d => {
+    cities.add(d.name);
+    const c = countryName(d.flag); if (!c) return;
+    if (!byCountry.has(c)) byCountry.set(c, new Set());
+    byCountry.get(c).add(d.name);
+  }));
+  const he = (a, b) => a.localeCompare(b, "he");
+  $("#qlist").innerHTML = [...byCountry.keys()].sort(he).map(c => `<option value="${esc(c)}" label="${esc([...byCountry.get(c)].sort(he).join(", "))}"></option>`)
+    .concat([...cities].sort(he).map(n => `<option value="${esc(n)}"></option>`)).join("");
   $("#q").oninput = (e) => { state.q = e.target.value.trim(); state.shown = 20; render(); };
   document.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-copy]"); if (!b) return;
