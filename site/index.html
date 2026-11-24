@@ -34,22 +34,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sky: #e6f0f7; --ink: #0a2342; --ink-2: #3c5677; --paper: #ffffff;
-    --sun: #c94a0c; --sun-ink: #ffffff; --sea: #08777a; --leaf: #0f7a4b; --line: #d3e1ec;
-    --wa: #0f7d43;
+    --bg: #f4f6f9; --paper: #ffffff; --ink: #0b1f3a; --ink-2: #51627a; --line: #dfe5ec;
+    --brand: #c2410c; --brand-dark: #9a3412; --brand-soft: #fff1e8; --ok: #0f7a4b;
     --display: "Secular One", "Assistant", system-ui, sans-serif;
     --body: "Assistant", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--sky); color: var(--ink); font: 17px/1.5 var(--body); }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16.5px/1.5 var(--body); }
   a { color: inherit; }
   :focus-visible { outline: 3px solid #ffb703; outline-offset: 2px; box-shadow: 0 0 0 5px var(--ink); }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
   .skip { position: absolute; top: -60px; right: 12px; z-index: 20; background: #fff; color: var(--ink); font-weight: 800;
-          padding: 10px 16px; border-radius: 10px; text-decoration: none; }
+          padding: 10px 16px; border-radius: 8px; text-decoration: none; }
   .skip:focus { top: 12px; }
+  /* אייקונים: קו דק אחיד, בצבע הטקסט שסביבם */
+  .ic { width: 1.05em; height: 1.05em; flex: none; vertical-align: -0.16em; fill: none; stroke: currentColor;
+        stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-  /* ---------- cover: the week's cheapest deal ---------- */
+  /* ---------- cover ---------- */
   .cover { position: relative; color: #fff; background: linear-gradient(to bottom, #050d1c 0%, #081a33 100%); overflow: hidden; }
   /* תמונת האווירה של האתר: זריחה מחלון המטוס. יושבת מאחורי הכותרת ונמוגה לפני המשבצות */
   .cover .sky { position: absolute; top: 0; left: 0; right: 0; height: 340px;
@@ -60,159 +62,133 @@
   .cover .sky-credit { position: absolute; bottom: 5px; left: 10px; z-index: 1; font-size: 11px; color: #fff; opacity: .7;
                        text-decoration: none; }
   .cover h1, .cover .kicker, .cover .lede { text-shadow: 0 1px 8px rgba(0,0,0,.55); }
-  .cover .in { position: relative; z-index: 1; width: 100%; max-width: 1040px; margin: 0 auto; padding: 70px 20px 30px; }
-  .cover .lede { margin: 0 0 18px; font-size: 17px; font-weight: 600; opacity: .92; max-width: 560px; }
+  .cover .in { position: relative; z-index: 1; width: 100%; max-width: 1040px; margin: 0 auto; padding: 74px 20px 30px; }
+  .cover .kicker { font-weight: 700; font-size: 15px; color: #ffd6b8; letter-spacing: .2px; }
+  .cover h1 { font-family: var(--display); font-weight: 400; font-size: clamp(34px, 6.4vw, 58px); line-height: 1.05; margin: 2px 0 6px; }
+  .cover .lede { margin: 0 0 18px; font-size: 16.5px; font-weight: 600; opacity: .92; max-width: 560px; }
+  .brand { position: absolute; top: 16px; right: 20px; left: 20px; max-width: 1040px; margin: 0 auto; z-index: 1;
+           display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+  .brand .logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-size: 20px; }
+  .brand .logo svg { width: 30px; height: 30px; flex: none; }
+  .brand .when { font-size: 13.5px; opacity: .85; font-weight: 600; }
   /* ארבע משבצות: הזול ביותר לכל סופ"ש */
-  .wk-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .wk-tile { position: relative; aspect-ratio: 4 / 5; border-radius: 16px; overflow: hidden; background-size: cover;
-             box-shadow: 0 14px 28px -18px rgba(0,0,0,.7); }
+  .wk-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .wk-tile { position: relative; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; background-size: cover; }
   .wk-tile::after { content: ""; position: absolute; inset: 0;
-                    background: linear-gradient(to top, rgba(10,35,66,.92) 0%, rgba(10,35,66,.12) 55%, rgba(10,35,66,.6) 100%); }
+                    background: linear-gradient(to top, rgba(8,22,44,.94) 0%, rgba(8,22,44,.15) 58%, rgba(8,22,44,.62) 100%); }
+  .ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .wk-tile .go { position: absolute; inset: 0; z-index: 1; width: 100%; border: 0; background: transparent; color: #fff;
                  font: inherit; cursor: pointer; text-align: right; padding: 12px 14px 24px;
                  display: flex; flex-direction: column; justify-content: space-between; }
   .wk-tile .go:focus-visible { outline-offset: -5px; }
-  .wk-when { font-weight: 800; font-size: 16px; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
-  .wk-when .soon { display: inline-block; background: #fff; color: var(--ink); font-size: 12px; padding: 1px 8px;
-                   border-radius: 999px; margin-left: 6px; text-shadow: none; }
-  .wk-bot { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-  .wk-price { background: var(--sun); font-family: var(--display); font-size: 28px; line-height: 1; padding: 6px 12px 8px;
-              border-radius: 10px; transform: rotate(-2deg); }
-  .wk-price small { font-family: var(--body); font-size: 15px; font-weight: 700; margin-left: 3px; }
-  .wk-names { font-weight: 700; font-size: 15px; line-height: 1.3; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
-  .wk-tile.on { outline: 4px solid #ffb703; outline-offset: 2px; }
-  .wk-tile.none { display: grid; place-items: center; text-align: center; background: rgba(255,255,255,.08);
-                  box-shadow: none; font-weight: 600; padding: 12px; }
+  .wk-when { font-weight: 700; font-size: 15px; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+  .wk-when .soon { display: inline-block; background: #fff; color: var(--ink); font-size: 12px; font-weight: 800; padding: 0 7px;
+                   border-radius: 5px; margin-left: 6px; text-shadow: none; }
+  .wk-bot { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .wk-price { font-size: 30px; font-weight: 800; line-height: 1.1; text-shadow: 0 1px 4px rgba(0,0,0,.5); }
+  .wk-price small { font-size: 15px; font-weight: 700; margin-left: 4px; opacity: .9; }
+  .wk-names { font-weight: 600; font-size: 14.5px; line-height: 1.3; text-shadow: 0 1px 3px rgba(0,0,0,.6); opacity: .95; }
+  .wk-tile.on { outline: 3px solid #fff; outline-offset: 2px; }
+  .wk-tile.none { display: grid; place-items: center; text-align: center; background: rgba(255,255,255,.08); font-weight: 600; padding: 12px; }
   .wk-tile.none::after { display: none; }
+  .wk-tile .pc { position: absolute; z-index: 2; bottom: 4px; left: 8px; max-width: 92%; font-size: 11px; color: #fff; opacity: .8;
+                 text-shadow: 0 1px 2px #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: none; }
+
+  /* ---------- controls ---------- */
+  .controls { position: sticky; top: 0; z-index: 5; background: rgba(244,246,249,.95); backdrop-filter: blur(8px);
+              border-bottom: 1px solid var(--line); }
+  .controls .in { max-width: 1040px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px;
+                  align-items: center; justify-content: space-between; }
+  .seg { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+  .seg button { border: 0; background: transparent; font: inherit; font-weight: 700; font-size: 15px; color: var(--ink-2);
+                padding: 7px 14px; border-radius: 7px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  .seg button.on { background: var(--ink); color: #fff; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); background: #fff; color: var(--ink); font: inherit; font-weight: 600;
+          font-size: 14.5px; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
+  .chip:hover { border-color: #b9c4d1; }
+  .chip.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-dark); }
+  .days[hidden] { display: none; }
+  .wks { margin-top: 2px; }
+  .search { width: 100%; font: inherit; font-size: 16px; padding: 10px 42px 10px 14px; margin: 4px 0;
+            border: 1px solid var(--line); border-radius: 10px; color: var(--ink);
+            background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2351627a' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.6-3.6'/%3E%3C/svg%3E") no-repeat right 13px center / 19px; }
+  .search:focus { outline: 3px solid var(--ink); outline-offset: 1px; }
+
+  main { max-width: 1040px; margin: 0 auto; padding: 20px 16px 120px; }
+  .demo { background: #fff7cc; border: 1px solid #f1dc7a; color: #6b5300; padding: 10px 14px;
+          border-radius: 8px; margin-bottom: 18px; font-size: 15px; }
+  .count { color: var(--ink-2); font-weight: 600; font-size: 15px; margin: 0 0 12px; }
+
+  /* ---------- deal rows ---------- */
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+  .deal { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .deal .row { display: grid; grid-template-columns: 128px minmax(0, 1fr); }
+  .thumb { position: relative; background-size: cover; background-position: center; min-height: 100%; }
+  .deal .body { padding: 12px 14px 13px; display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .deal .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .deal .city { margin: 0; font-size: 20px; font-weight: 800; line-height: 1.2; }
+  .deal .country { display: block; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .deal .price { text-align: left; white-space: nowrap; font-size: 24px; font-weight: 800; line-height: 1.1; color: var(--brand); }
+  .deal .price small { display: block; margin-top: 2px; font-size: 12px; font-weight: 600; color: var(--ink-2); }
+  .legs { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 1px 8px; font-size: 14.5px; }
+  .legs dt { color: var(--ink-2); font-weight: 600; } .legs dd { margin: 0; font-weight: 600; }
+  .meta { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .meta .good { color: var(--ok); } .meta .sh { color: var(--ink); }
+  .book { display: block; margin-top: 3px; text-align: center; background: var(--brand); color: #fff; text-decoration: none;
+          font-weight: 800; font-size: 15.5px; padding: 9px 12px; border-radius: 8px; }
+  .book:hover { background: var(--brand-dark); }
+  /* "עוד פרטים": שיתוף, מלון, eSIM, כשרות והשוואת מחיר נפתחים רק למי שרוצה */
+  .dx summary { list-style: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px;
+                padding: 7px 14px; border-top: 1px solid var(--line); font-size: 13.5px; font-weight: 700; color: var(--ink-2); }
+  .dx summary::-webkit-details-marker { display: none; }
+  .dx summary:hover { color: var(--ink); background: #fafbfc; }
+  .dx[open] summary .ic { transform: rotate(180deg); }
+  .dx .in { padding: 4px 14px 14px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+  .dx p { margin: 0; }
+  .dx .note { color: var(--ink-2); font-size: 13.5px; line-height: 1.5; }
+  .save { font-weight: 700; color: var(--ok); }
+  .btnrow { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn { flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: inherit;
+         font-weight: 700; font-size: 14px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line);
+         background: #fff; color: var(--ink); text-decoration: none; cursor: pointer; }
+  .btn:hover { border-color: var(--ink-2); }
+  .kosher { background: #f6f8fa; border-radius: 8px; padding: 10px 12px; font-size: 13.5px; line-height: 1.5; }
+  .kosher .kl { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 6px; }
+  .kosher .kl a { font-weight: 700; }
+  .empty { grid-column: 1 / -1; text-align: center; color: var(--ink-2); padding: 60px 0; font-size: 17px; }
+  .more { display: block; margin: 22px auto 0; border: 1px solid var(--ink); background: #fff; color: var(--ink);
+          font: inherit; font-weight: 700; font-size: 15.5px; padding: 11px 26px; border-radius: 8px; cursor: pointer; }
+  .more:hover { background: var(--ink); color: #fff; }
+  .toast { position: fixed; bottom: 82px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff;
+           font-weight: 700; font-size: 15px; padding: 9px 16px; border-radius: 8px; box-shadow: 0 6px 18px -8px rgba(0,0,0,.5);
+           opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 7; }
+  .toast.show { opacity: 1; }
+  .kiwi { margin: 28px auto 0; max-width: 620px; text-align: center; background: #fff; border: 1px solid var(--line);
+          border-radius: 12px; padding: 14px 18px; font-size: 15px; color: var(--ink-2); }
+  .kiwi a { color: var(--ink); font-weight: 800; }
+  footer { color: var(--ink-2); font-size: 13.5px; text-align: center; margin-top: 34px; }
+  textarea.hidden { position: fixed; top: -1000px; }
+
+  @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
   @media (max-width: 760px) {
+    /* בטלפון סרגל הסינון גבוה מדי בשביל להישאר צמוד למעלה */
+    .controls { position: static; }
+    /* שמונה סופ"שים לא נכנסים בשורה: בטלפון גוללים אותם הצידה במקום לשבור לכמה שורות */
+    .wks { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+    .wks::-webkit-scrollbar { display: none; }
+    .wks .chip { flex: none; white-space: nowrap; }
     .wk-tiles { grid-template-columns: 1fr 1fr; gap: 10px; }
     .wk-tile { aspect-ratio: 5 / 6; }
     .wk-when { white-space: nowrap; }
     .wk-when .soon { display: table; margin: 0 0 3px; }
-    .wk-price { font-size: 24px; }
-    .wk-when { font-size: 15px; } .wk-names { font-size: 14px; }
+    .wk-price { font-size: 26px; }
+    .wk-names { font-size: 13.5px; }
   }
-  .brand { position: absolute; top: 18px; right: 20px; left: 20px; max-width: 1040px; margin: 0 auto; z-index: 1;
-           display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
-  .brand .logo { font-family: var(--display); font-size: 20px; }
-  .brand .when { font-size: 14px; opacity: .85; font-weight: 600; }
-  .cover .kicker { font-weight: 700; font-size: 17px; color: #ffd6b8; }
-  .cover h1 { font-family: var(--display); font-weight: 400; font-size: clamp(36px, 7vw, 64px);
-              line-height: 1.05; margin: 2px 0 6px; }
-
-  /* ---------- controls ---------- */
-  .controls { position: sticky; top: 0; z-index: 5; background: rgba(230,240,247,.94); backdrop-filter: blur(8px);
-              border-bottom: 1px solid var(--line); }
-  .controls .in { max-width: 1040px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px;
-                  align-items: center; justify-content: space-between; }
-  .seg { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
-  .seg button { border: 0; background: transparent; font: inherit; font-weight: 700; color: var(--ink-2);
-                padding: 8px 16px; border-radius: 999px; cursor: pointer; }
-  .seg button.on { background: var(--ink); color: #fff; }
-  .seg.sh button.on[data-list="shabbat"] { background: var(--sea); }
-  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .chip { border: 1px solid var(--line); background: #fff; color: var(--ink); font: inherit; font-weight: 600;
-          font-size: 15px; padding: 7px 13px; border-radius: 999px; cursor: pointer; }
-  .chip.on { border-color: var(--sun); background: #fff1e6; color: #a84300; }
-
-  main { max-width: 1040px; margin: 0 auto; padding: 22px 16px 120px; }
-  .demo { background: #fff7cc; border: 1px solid #f1dc7a; color: #6b5300; padding: 10px 14px;
-          border-radius: 10px; margin-bottom: 18px; font-size: 15px; }
-  .count { color: var(--ink-2); font-weight: 600; margin: 0 0 14px; }
-
-  /* ---------- ticket cards ---------- */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-  .ticket { background: var(--paper); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column;
-            box-shadow: 0 1px 0 var(--line), 0 10px 24px -18px rgba(10,35,66,.45); }
-  .photo { position: relative; aspect-ratio: 16 / 10; background-size: cover; background-position: center; }
-  .photo::after { content: ""; position: absolute; inset: 0;
-                  background: linear-gradient(to top, rgba(10,35,66,.78), rgba(10,35,66,0) 58%); }
-  .photo .city { position: absolute; z-index: 1; bottom: 10px; right: 14px; color: #fff; margin: 0; font-weight: 400;
-                 font-family: var(--display); font-size: 34px; line-height: 1; }
-  .ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .photo .city span { font-size: 22px; margin-left: 6px; }
-  /* ב-Windows אין אימוג'י של דגלים ורואים אותיות (CY) במקום דגל, אז מסתירים */
-  html.no-flags .photo .city span { display: none; }
-  .chip.tgl.on { border-color: var(--sea); background: #e0f3f3; color: #06676a; }
-  .photo .tag-price { position: absolute; z-index: 1; top: 12px; left: 12px; background: var(--sun); color: #fff;
-                      font-family: var(--display); font-size: 26px; line-height: 1; padding: 7px 12px 8px;
-                      border-radius: 10px; transform: rotate(-3deg); box-shadow: 0 4px 12px -4px rgba(0,0,0,.35); }
-  .photo .drop { position: absolute; z-index: 1; top: 14px; right: 12px; background: var(--leaf); color: #fff;
-                 font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 999px; }
-  .photo .pc, .wk-tile .pc { position: absolute; z-index: 1; bottom: 4px; left: 8px; font-size: 11px; color: #fff; text-shadow: 0 1px 2px #000;
-               max-width: 60%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: none; }
-  .wk-tile .pc { z-index: 2; max-width: 92%; opacity: .85; }
-  /* perforation between the photo and the stub */
-  .perf { height: 18px; position: relative;
-          background: radial-gradient(circle at 0 50%, var(--sky) 9px, transparent 10px) left / 18px 18px no-repeat,
-                      radial-gradient(circle at 100% 50%, var(--sky) 9px, transparent 10px) right / 18px 18px no-repeat; }
-  .perf::before { content: ""; position: absolute; top: 50%; left: 18px; right: 18px; border-top: 2px dashed var(--line); }
-  .stub { padding: 2px 18px 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-  .fare { display: flex; justify-content: space-between; align-items: baseline; }
-  .fare b { font-size: 15px; } .fare span { color: var(--ink-2); font-size: 14px; font-weight: 600; }
-  .legs { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 15.5px; }
-  .legs dt { color: var(--ink-2); font-weight: 700; } .legs dd { margin: 0; font-weight: 600; }
-  .pills { display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; font-weight: 700; }
-  .pill { background: #eef4f9; color: var(--ink-2); padding: 3px 9px; border-radius: 6px; }
-  .pill.live { background: #e3f4ea; color: var(--leaf); }
-  .pill.sh { background: #e0f3f3; color: #06676a; }
-  .transfer { font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 8px; }
-  .transfer .est { opacity: .85; }
-  .book { margin-top: auto; display: block; text-align: center; background: var(--ink); color: #fff; text-decoration: none;
-          font-weight: 800; font-size: 17px; padding: 12px; border-radius: 12px; }
-  .book:hover { background: #12345f; }
-  .compare { margin: -4px 0 0; text-align: center; font-size: 13.5px; color: var(--ink-2); }
-  .compare a { color: #06676a; font-weight: 700; display: inline-block; padding: 4px 2px; }
-  .extras { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .extra { display: block; text-align: center; text-decoration: none; font-weight: 700; font-size: 15px;
-           padding: 9px 6px; border-radius: 10px; border: 1.5px solid var(--line); color: var(--ink); background: #f6f9fc; }
-  .extra:hover { border-color: var(--ink-2); }
-  .extras.one { grid-template-columns: 1fr; }
-  .empty { text-align: center; color: var(--ink-2); padding: 60px 0; font-size: 18px; }
-  .wks { margin-top: 8px; }
-  .search { width: 100%; box-sizing: border-box; font: inherit; font-size: 16px; padding: 11px 16px; margin: 10px 0 8px;
-    border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); }
-  .search:focus { outline: 3px solid var(--sea); outline-offset: 1px; }
-  .more { display: block; margin: 24px auto 0; border: 2px solid var(--ink); background: #fff; color: var(--ink);
-    font: inherit; font-weight: 700; font-size: 16px; padding: 12px 28px; border-radius: 999px; cursor: pointer; }
-  .more:hover { background: var(--sky); }
-
-  /* ---------- WhatsApp share per deal ---------- */
-  .share { display: flex; gap: 8px; margin-top: 8px; }
-  .share .wa, .share .cp { font: inherit; font-weight: 700; font-size: 15px; border-radius: 12px; padding: 10px 12px; cursor: pointer; text-decoration: none; text-align: center; }
-  .share .wa { flex: 1; background: var(--wa); color: #fff; border: 0; }
-  .share .cp { background: #fff; color: var(--wa); border: 2px solid var(--wa); }
-  .toast { position: fixed; bottom: 82px; left: 50%; transform: translateX(-50%); background: #fff; color: var(--leaf);
-           font-weight: 700; padding: 8px 16px; border-radius: 999px; box-shadow: 0 6px 18px -8px rgba(0,0,0,.4);
-           opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 7; }
-  .toast.show { opacity: 1; }
-  /* ---------- long weekend + kosher ---------- */
-  .seg.mode button.on { background: var(--sun); }
-  .days[hidden] { display: none; }
-  .photo .long { position: absolute; z-index: 1; bottom: 50px; right: 14px; background: #fff; color: var(--ink);
-                 font-weight: 800; font-size: 13px; padding: 3px 10px; border-radius: 999px; }
-  .save { margin: -4px 0 0; font-size: 14px; font-weight: 700; color: var(--leaf); }
-  .kosher { border: 1.5px solid #cfe5e5; background: #f3fafa; border-radius: 12px; padding: 10px 12px; font-size: 14px; }
-  .kosher p { margin: 0 0 8px; color: #164e50; line-height: 1.45; }
-  .kosher p b { color: #06676a; }
-  .kosher .kl { display: flex; flex-wrap: wrap; gap: 6px; }
-  .kosher .kl a { text-decoration: none; font-weight: 700; font-size: 13.5px; color: #06676a; background: #fff;
-                  border: 1px solid #b9dcdc; padding: 5px 10px; border-radius: 999px; }
-  .kosher .kl a:hover { border-color: #06676a; }
-  .kosher.none { background: #fff8ef; border-color: #f0d9bd; }
-  .kosher.none p, .kosher.none p b { color: #7a4a12; }
-  .kiwi { margin: 28px auto 0; max-width: 620px; text-align: center; background: #fff; border: 1px solid var(--line);
-          border-radius: 14px; padding: 14px 18px; font-size: 15.5px; color: var(--ink-2); }
-  .kiwi a { color: var(--sea); font-weight: 800; }
-  footer { color: var(--ink-2); font-size: 13.5px; text-align: center; margin-top: 34px; }
-  textarea.hidden { position: fixed; top: -1000px; }
-
-  /* בטלפון סרגל הסינון גבוה מדי בשביל להישאר צמוד למעלה */
-  @media (max-width: 760px) {
-    .controls { position: static; }
-    /* שמונה סופ"שים לא נכנסים בשורה: בטלפון גוללים אותם הצידה במקום לשבור לכמה שורות */
-    .wks { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; padding-bottom: 6px; }
-    .wks .chip { flex: none; white-space: nowrap; }
+  @media (max-width: 420px) {
+    .deal .row { grid-template-columns: 96px minmax(0, 1fr); }
+    .deal .city { font-size: 18.5px; } .deal .price { font-size: 22px; }
+    .deal .body { padding: 11px 12px 12px; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -223,7 +199,7 @@
 <section class="cover" id="cover" aria-label="הזול ביותר לכל סופ״ש">
   <div class="sky" role="img" aria-label="זריחה מעל העננים מחלון מטוס"></div>
   <a class="sky-credit" href="https://commons.wikimedia.org/wiki/File:Flying_through_the_sunrise_-_Flickr_-_Lenny_K_Photography.jpg" target="_blank" rel="noopener">צילום רקע: Lenny K Photography, CC BY 2.0</a>
-  <div class="brand"><span class="logo">טסים לסופ"ש ✈</span><span class="when" id="when"></span></div>
+  <div class="brand"><span class="logo"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#c2410c"/><path fill="#fff" d="M54 12c-3-3-8-2-11 1l-8 8-22-6-4 4 18 10-8 9-7-1-3 3 9 4 4 9 3-3-1-7 9-8 10 18 4-4-6-22 8-8c3-3 4-8 1-11z"/></svg>טסים לסופ״ש</span><span class="when" id="when"></span></div>
   <div class="in" id="coverIn"></div>
 </section>
 
@@ -231,7 +207,7 @@
   <div class="in">
     <div class="seg" id="seg" role="tablist" aria-label="סוג רשימה">
       <button data-list="general" class="on" role="tab" aria-selected="true">כל הדילים</button>
-      <button data-list="shabbat" role="tab" aria-selected="false">🕯️ לשומרי שבת</button>
+      <button data-list="shabbat" role="tab" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>לשומרי שבת</button>
     </div>
     <div class="seg mode" id="mode" role="group" aria-label="אורך הטיול">
       <button data-mode="weekend" class="on" aria-pressed="true">סופ״ש רגיל</button>
@@ -239,7 +215,7 @@
     </div>
     <div class="chips days" id="days" role="group" aria-label="יום היציאה" hidden></div>
     <label class="sr-only" for="q">חיפוש יעד, מדינה או תאריך</label>
-    <input id="q" class="search" type="search" autocomplete="off" list="qlist" placeholder="🔎 חיפוש עיר, מדינה או תאריך (למשל: רומא, יוון, 3/12)">
+    <input id="q" class="search" type="search" autocomplete="off" list="qlist" placeholder="חיפוש עיר, מדינה או תאריך (למשל: רומא, יוון, 3/12)">
     <datalist id="qlist"></datalist>
     <div class="chips" id="chips" role="group" aria-label="סינון לפי מחיר"></div>
     <div class="chips wks" id="wks" role="group" aria-label="בחירת סופ״ש"></div>
@@ -305,17 +281,17 @@ const AIRLINES = {"W6":"Wizz Air","W4":"Wizz Air","W9":"Wizz Air","5W":"Wizz Air
   "J2":"Azerbaijan Airlines","TO":"Transavia","HV":"Transavia","FR":"Ryanair","U2":"easyJet","RO":"Tarom","LO":"LOT",
   "OS":"Austrian","LH":"Lufthansa","LX":"SWISS","SN":"Brussels Airlines","UX":"Air Europa","QS":"Smartwings","FB":"Bulgaria Air","SKY express":"Sky Express","TK":"Turkish Airlines","PC":"Pegasus","FZ":"flydubai","EY":"Etihad","H4":"HiSky"};
 const airlineName = (a) => AIRLINES[a] || a;
-// בדיקה אם הדפדפן יודע לצייר דגלים (ב-Windows לא)
-(function () {
-  try {
-    const c = document.createElement("canvas"); c.width = c.height = 24;
-    const x = c.getContext("2d", { willReadFrequently: true }); x.font = "18px sans-serif"; x.fillStyle = "#000"; x.fillText("🇮🇹", 0, 18);
-    const px = x.getImageData(0, 0, 24, 24).data;
-    let color = false;
-    for (let i = 0; i < px.length; i += 4) if (px[i + 3] > 50 && (Math.abs(px[i] - px[i + 1]) > 30 || Math.abs(px[i + 1] - px[i + 2]) > 30)) { color = true; break; }
-    if (!color) document.documentElement.classList.add("no-flags");
-  } catch (e) {}
-})();
+// אייקונים בקו דק (מבוססים על ספריית Lucide, רישיון ISC). משמשים במקום אימוג'י.
+const ICONS = {
+  chevron: '<path d="m6 9 6 6 6-6"/>',
+  flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  chat: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+  bed: '<path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/>',
+  phone: '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>',
+  scale: '<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>',
+};
+const ic = (n) => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]}</svg>`;
 function creditHtml(code, cls) {
   const p = (state.data.photos || {})[code];
   if (!p || !p.url) return "";
@@ -341,12 +317,12 @@ function kosherHtml(d) {
   const info = (state.data.dests || {})[d.dest]; if (!info || !info.kosher) return "";
   const k = info.kosher, city = info.city_en, links = [];
   if (k.tier !== "none") {
-    links.push(`<a href="${gmaps("Chabad " + city)}" target="_blank" rel="noopener" aria-label="בית חב״ד ב${esc(d.name)} במפה (נפתח בחלון חדש)">🕍 בית חב״ד</a>`);
-    links.push(`<a href="${gmaps("kosher restaurant " + city)}" target="_blank" rel="noopener" aria-label="מסעדות כשרות ב${esc(d.name)} במפה (נפתח בחלון חדש)">🍽️ מסעדות כשרות</a>`);
-    links.push(`<a href="${gmaps("hotels near Chabad " + city)}" target="_blank" rel="noopener" aria-label="מלונות ליד בית חב״ד ב${esc(d.name)} (נפתח בחלון חדש)">🏨 מלונות ליד חב״ד</a>`);
+    links.push(`<a href="${gmaps("Chabad " + city)}" target="_blank" rel="noopener" aria-label="בית חב״ד ב${esc(d.name)} במפה (נפתח בחלון חדש)">בית חב״ד</a>`);
+    links.push(`<a href="${gmaps("kosher restaurant " + city)}" target="_blank" rel="noopener" aria-label="מסעדות כשרות ב${esc(d.name)} במפה (נפתח בחלון חדש)">מסעדות כשרות</a>`);
+    links.push(`<a href="${gmaps("hotels near Chabad " + city)}" target="_blank" rel="noopener" aria-label="מלונות ליד בית חב״ד ב${esc(d.name)} (נפתח בחלון חדש)">מלונות ליד חב״ד</a>`);
   }
-  if (k.delivery) links.push(`<a href="${esc(k.delivery)}" target="_blank" rel="noopener" aria-label="הזמנת ארוחות כשרות עם משלוח מחב״ד אתונה (נפתח בחלון חדש)">🚚 משלוח ארוחות כשרות</a>`);
-  return `<div class="kosher ${k.tier === "none" ? "none" : ""}"><p><b>כשרות ושבת:</b> ${esc(k.note)}</p>${links.length ? `<div class="kl">${links.join("")}</div>` : ""}</div>`;
+  if (k.delivery) links.push(`<a href="${esc(k.delivery)}" target="_blank" rel="noopener" aria-label="הזמנת ארוחות כשרות עם משלוח מחב״ד אתונה (נפתח בחלון חדש)">משלוח ארוחות כשרות</a>`);
+  return `<div class="kosher"><p><b>כשרות ושבת:</b> ${esc(k.note)}</p>${links.length ? `<div class="kl">${links.join("")}</div>` : ""}</div>`;
 }
 const perWay = (d) => nis(d.price / 2);
 function wkLabel(iso) {
@@ -405,54 +381,59 @@ function renderCover() {
 
 function card(d, i) {
   const sh = state.list === "shabbat";
-  const out = `${d.out_day} ${dm(d.out_date)}, ${d.out_dep || ""}${d.out_arr ? ` (נוחת ${d.out_arr})` : ""}`;
-  return `<article class="ticket" role="listitem">
-    <div class="photo" style="background-image:${fallbackBg(d.dest)}" role="img" aria-label="צילום מ${esc(d.name)}">
-      ${photoImg(d.dest)}
-      ${drop(d) ? `<span class="drop">ירד ${nis(drop(d))}</span>` : ""}
-      ${d.long ? `<span class="long">סופ״ש ארוך · ${d.days} ימים</span>` : ""}
-      <span class="tag-price">${nis(d.price)}</span>
-      <h3 class="city">${esc(d.name)}<span aria-hidden="true">${d.flag}</span></h3>
-      ${creditHtml(d.dest, "pc")}
-    </div>
-    <div class="perf" aria-hidden="true"></div>
-    <div class="stub">
-      <div class="fare"><b>הלוך-חזור לאדם</b><span>כ-${perWay(d)} לכיוון</span></div>
-      <dl class="legs"><dt>הלוך</dt><dd>${out}</dd><dt>חזור</dt><dd>${d.ret_day} ${dm(d.ret_date)}, ${retText(d)}</dd></dl>
-      ${saveHtml(d)}
-      ${d.to_center_min ? `<p class="transfer">מהשדה למרכז העיר (${d.to_center_km} ק״מ): 🚕 ברכב/מונית כ-${d.to_center_min} דק׳${d.pt_min ? ` · 🚆 בתחבורה ציבורית כ-${d.pt_min} דק׳` : ""} <span class="est">(זמן משוער)</span>${sh ? `<br>זמני השבת חושבו לפי נסיעה במונית עד מרכז העיר.` : ""}</p>` : ""}
-      <div class="pills">
-        ${countryName(d.flag) ? `<span class="pill">${esc(countryName(d.flag))}</span>` : ""}
-        <span class="pill">${d.stops ? "עצירה אחת" : "ישירה"}</span>
-        ${d.airline ? `<span class="pill">${esc(airlineName(d.airline))}</span>` : ""}
-        <span class="pill ${d.source === "live" ? "live" : ""}">${d.source === "live" ? "מחיר חי" : "מחיר מ-48 שעות אחרונות"}</span>
-        ${sh ? `<span class="pill sh">נרות ${d.candle_lighting} · צאת שבת ${d.havdalah}</span>` : ""}
+  const country = countryName(d.flag);
+  const out = `${d.out_day} ${dm(d.out_date)} · ${d.out_dep || ""}${d.out_arr ? ` (נוחת ${d.out_arr})` : ""}`;
+  const meta = [
+    `<span>${d.stops ? "עצירה אחת" : "טיסה ישירה"}</span>`,
+    d.airline ? `<span>${esc(airlineName(d.airline))}</span>` : "",
+    d.long ? `<span>סופ״ש ארוך, ${d.days} ימים</span>` : "",
+    drop(d) ? `<span class="good">ירד ${nis(drop(d))}</span>` : "",
+    d.source === "live" ? `<span class="good">מחיר חי</span>` : "",
+    sh ? `<span class="sh">${ic("flame")} נרות ${d.candle_lighting} · צאת שבת ${d.havdalah}</span>` : "",
+  ].join("");
+  const transfer = d.to_center_min ? `<p class="note">מהשדה למרכז העיר (${d.to_center_km} ק״מ): כ-${d.to_center_min} דק׳ ברכב או במונית${d.pt_min ? `, כ-${d.pt_min} דק׳ בתחבורה ציבורית` : ""} (זמן משוער).${sh ? ` זמני השבת חושבו לפי נסיעה במונית עד מרכז העיר.` : ""}</p>` : "";
+  const credit = creditHtml(d.dest, "");
+  // השורה הראשית: תמונה קטנה, יעד, מחיר, זמנים וכפתור הזמנה. כל השאר נפתח ב"עוד פרטים".
+  return `<article class="deal" role="listitem">
+    <div class="row">
+      <div class="thumb" style="background-image:${fallbackBg(d.dest)}" role="img" aria-label="צילום מ${esc(d.name)}">${photoImg(d.dest)}</div>
+      <div class="body">
+        <div class="head">
+          <h3 class="city">${esc(d.name)}${country ? `<span class="country">${esc(country)}</span>` : ""}</h3>
+          <div class="price">${nis(d.price)}<small>הלוך-חזור לאדם</small></div>
+        </div>
+        <dl class="legs"><dt>הלוך</dt><dd>${out}</dd><dt>חזור</dt><dd>${d.ret_day} ${dm(d.ret_date)} · ${retText(d)}</dd></dl>
+        <div class="meta">${meta}</div>
+        ${d.link ? `<a class="book" href="${esc(d.link)}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
       </div>
-      ${d.link ? `<a class="book" href="${esc(d.link)}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
-      ${compareHtml(d)}
-      ${shareHtml(d, i)}
-      ${extrasHtml(d)}
-      ${kosherHtml(d)}
     </div>
+    <details class="dx">
+      <summary>עוד פרטים ${ic("chevron")}</summary>
+      <div class="in">
+        ${saveHtml(d)}
+        <p class="note">כ-${perWay(d)} לכיוון. ${d.source === "live" ? "המחיר נבדק בעדכון האחרון." : "מחיר מ-48 השעות האחרונות, כדאי לוודא אותו בזמן ההזמנה."}</p>
+        ${transfer}
+        ${shareHtml(d, i)}
+        ${extrasHtml(d)}
+        ${kosherHtml(d)}
+        ${credit ? `<p class="note">${credit}</p>` : ""}
+      </div>
+    </details>
   </article>`;
 }
 
-// קישורים שפותחים את אותה טיסה באותם תאריכים במנועי השוואה, כדי לבדוק אם יש מחיר טוב יותר
-// הקישור מגיע מהמנוע רק כשנוצר קישור שותפים (כלומר יש עמלה). בלי קישור כזה לא מציגים כלום.
-function compareHtml(d) {
-  if (!d.compare_link) return "";
-  return `<p class="compare"><a href="${esc(d.compare_link)}" target="_blank" rel="noopener nofollow sponsored" aria-label="השוואת המחיר ל${esc(d.name)} ב-Kiwi (נפתח בחלון חדש)">להשוות את המחיר ב-Kiwi</a></p>`;
-}
 function saveHtml(d) {
   if (!d.long) return "";
   const r = regularPrice(d);
   return r && r > d.price ? `<p class="save">זול ב-${nis(r - d.price)} מהסופ״ש הרגיל באותו שבוע</p>` : "";
 }
 function extrasHtml(d) {
+  // כל הקישורים כאן מגיעים מהמנוע רק כשנוצר קישור שותפים (כלומר יש עמלה). בלי קישור כזה לא מציגים כלום.
   const items = [];
-  if (d.hotel_link) items.push(`<a class="extra" href="${esc(d.hotel_link)}" target="_blank" rel="noopener" aria-label="מלונות ב${esc(d.name)} לתאריכי הטיסה (נפתח בחלון חדש)">🏨 מלון ב${esc(d.name)}</a>`);
-  if (d.esim_link) items.push(`<a class="extra" href="${esc(d.esim_link)}" target="_blank" rel="noopener" aria-label="eSIM לגלישה ב${esc(d.name)} (נפתח בחלון חדש)">📱 eSIM לגלישה</a>`);
-  return items.length ? `<div class="extras${items.length === 1 ? " one" : ""}">${items.join("")}</div>` : "";
+  if (d.hotel_link) items.push(`<a class="btn" href="${esc(d.hotel_link)}" target="_blank" rel="noopener" aria-label="מלונות ב${esc(d.name)} לתאריכי הטיסה (נפתח בחלון חדש)">${ic("bed")} מלון ב${esc(d.name)}</a>`);
+  if (d.esim_link) items.push(`<a class="btn" href="${esc(d.esim_link)}" target="_blank" rel="noopener" aria-label="eSIM לגלישה ב${esc(d.name)} (נפתח בחלון חדש)">${ic("phone")} eSIM לגלישה</a>`);
+  if (d.compare_link) items.push(`<a class="btn" href="${esc(d.compare_link)}" target="_blank" rel="noopener nofollow sponsored" aria-label="השוואת המחיר ל${esc(d.name)} ב-Kiwi (נפתח בחלון חדש)">${ic("scale")} להשוות ב-Kiwi</a>`);
+  return items.length ? `<div class="btnrow">${items.join("")}</div>` : "";
 }
 
 function dealText(d) {
@@ -474,9 +455,9 @@ function dealText(d) {
   return lines.join("\n");
 }
 function shareHtml(d, i, cls) {
-  return `<div class="share ${cls || ""}">
-    <a class="wa" href="https://wa.me/?text=${encodeURIComponent(dealText(d))}" target="_blank" rel="noopener" aria-label="שליחת הדיל ל${esc(d.name)} בוואטסאפ (נפתח בחלון חדש)">📲 שליחה בוואטסאפ</a>
-    <button class="cp" data-copy="${i}" aria-label="העתקת הדיל ל${esc(d.name)}">העתקה</button>
+  return `<div class="btnrow">
+    <a class="btn" href="https://wa.me/?text=${encodeURIComponent(dealText(d))}" target="_blank" rel="noopener" aria-label="שליחת הדיל ל${esc(d.name)} בוואטסאפ (נפתח בחלון חדש)">${ic("chat")} שליחה בוואטסאפ</a>
+    <button class="btn" data-copy="${i}" aria-label="העתקת הדיל ל${esc(d.name)}">${ic("copy")} העתקה</button>
   </div>`;
 }
 
@@ -523,7 +504,7 @@ function init(data) {
   $("#demo").hidden = !data.demo;
   $("#chips").innerHTML = [`<button class="chip on" data-max="">כל המחירים</button>`]
     .concat(data.price_filters.map(p => `<button class="chip" data-max="${p}">עד ${nis(p)}</button>`))
-    .concat(Object.values(data.lists).some(l => l.some(d => !d.stops)) ? [`<button class="chip tgl" id="direct" aria-pressed="false">✈ ישירות בלבד</button>`] : []).join("");
+    .concat(Object.values(data.lists).some(l => l.some(d => !d.stops)) ? [`<button class="chip tgl" id="direct" aria-pressed="false">ישירות בלבד</button>`] : []).join("");
   if ($("#direct")) $("#direct").onclick = () => { state.direct = !state.direct; state.shown = 20; render(); };
   $("#wks").innerHTML = [`<button class="chip on" data-wk="">כל הסופ"שים</button>`]
     .concat(data.weekends.map((w, i) => `<button class="chip" data-wk="${w}">${i === 0 ? "הקרוב: " : ""}${wkLabel(w)}</button>`)).join("");
