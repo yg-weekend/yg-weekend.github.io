@@ -438,15 +438,10 @@ function card(d, i) {
 }
 
 // קישורים שפותחים את אותה טיסה באותם תאריכים במנועי השוואה, כדי לבדוק אם יש מחיר טוב יותר
+// הקישור מגיע מהמנוע רק כשנוצר קישור שותפים (כלומר יש עמלה). בלי קישור כזה לא מציגים כלום.
 function compareHtml(d) {
-  const city = ((state.data.dests || {})[d.dest] || {}).city_en || d.dest;
-  const yy = (iso) => iso.slice(2).replace(/-/g, "");
-  const links = [
-    ["Google Flights", `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from TLV to ${city} on ${d.out_date} through ${d.ret_date}`)}&hl=iw&curr=ILS`],
-    ["Kayak", `https://www.kayak.com/flights/TLV-${encodeURIComponent(d.dest)}/${d.out_date}/${d.ret_date}?sort=price_a`],
-    ["Skyscanner", `https://www.skyscanner.co.il/transport/flights/tlv/${encodeURIComponent(d.dest.toLowerCase())}/${yy(d.out_date)}/${yy(d.ret_date)}/?adultsv2=1&currency=ILS`],
-  ];
-  return `<p class="compare">להשוות מחיר: ${links.map(([n, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener nofollow" aria-label="השוואת המחיר ל${esc(d.name)} ב-${n} (נפתח בחלון חדש)">${n}</a>`).join(" · ")}</p>`;
+  if (!d.compare_link) return "";
+  return `<p class="compare"><a href="${esc(d.compare_link)}" target="_blank" rel="noopener nofollow sponsored" aria-label="השוואת המחיר ל${esc(d.name)} ב-Kiwi (נפתח בחלון חדש)">להשוות את המחיר ב-Kiwi</a></p>`;
 }
 function saveHtml(d) {
   if (!d.long) return "";

@@ -441,7 +441,11 @@ def extra_urls(deal: dict, dest: dict) -> dict:
         "group_adults": 2, "no_rooms": 1, "lang": "he"})
     slug = dest.get("esim_slug")
     esim = f"https://yesim.app/country/{slug}/" if slug else "https://yesim.app/"
-    return {"hotel": hotel, "esim": esim}
+    # אותה טיסה באותם תאריכים ב-Kiwi, כדי שהגולש יוכל להשוות מחיר דרך קישור שותפים
+    kiwi = "https://www.kiwi.com/deep?" + urlencode({
+        "from": "TLV", "to": dest["code"], "departure": deal["out_date"], "return": deal["ret_date"],
+        "currency": "ILS", "lang": "he"})
+    return {"hotel": hotel, "esim": esim, "kiwi": kiwi}
 
 
 def partner_links(urls: list[str], token: str, trs: int, marker: str, cache: dict) -> dict:
@@ -473,7 +477,7 @@ def add_extras(lists: dict, cfg: dict, token: str | None, marker: str) -> None:
     """מוסיף לכל דיל כפתור מלון וכפתור eSIM - רק אם הצלחנו לייצר קישור שותפים (כלומר יש עמלה)."""
     for deals in lists.values():
         for d in deals:
-            d["hotel_link"] = d["esim_link"] = None
+            d["hotel_link"] = d["esim_link"] = d["compare_link"] = None
     if not token or not marker or not cfg.get("travelpayouts_trs"):
         return
     dests = {x["code"]: x for x in cfg["destinations"]}
@@ -490,6 +494,7 @@ def add_extras(lists: dict, cfg: dict, token: str | None, marker: str) -> None:
     for d, ex in wanted.values():
         d["hotel_link"] = cache.get(ex["hotel"])
         d["esim_link"] = cache.get(ex["esim"])
+        d["compare_link"] = cache.get(ex["kiwi"])
 
 
 # ---------------------------------------------------------------- demo data
