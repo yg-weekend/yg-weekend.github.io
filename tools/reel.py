@@ -102,20 +102,22 @@ def main():
     shabbat_rows = ['נוחתים לפני שבת, בלי לחץ' if lst == 'shabbat' else f'כ-{deal["to_center_min"]} דקות מהשדה למרכז']
     kn = (dest.get('kosher') or {}).get('tier')
     if lst == 'shabbat':
-        shabbat_rows = [f'נוחתים ב{deal["out_day"]}, הרבה לפני שבת' if deal['out_day'] not in ('שישי',) else f'נוחתים בשישי עד {deal["land_by"]}',
+        week = ['שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת', 'ראשון']
+        arr_day = deal['out_day']
+        if deal.get('out_arr') and deal['out_arr'] < deal['out_dep'] and arr_day in week:
+            arr_day = week[(week.index(arr_day) + 1) % 7]
+        land = f'נוחתים ב{arr_day} ב-{deal["out_arr"]}' if deal.get('out_arr') else f'נוחתים עד {deal["land_by"]}'
+        shabbat_rows = [land + (f' · שבת ב-{deal["candle_lighting"]}' if arr_day == 'שישי' else ', הרבה לפני שבת'),
                         'בית חב״ד עם ארוחות שבת' if kn in ('full', 'chabad', 'seasonal') else 'יש אפשרויות כשרות באזור',
                         f'{deal["to_center_min"]} דקות מהשדה למרכז']
     credits = ' · '.join(sorted({(p['credit'] or 'Wikimedia') for p in photos}))[:90]
 
     def s1(t, dur):
-        img = text(Image.new('RGBA', (W, H)), 'YG Weekend', 300, F(BOLD, 46), fill=(255, 240, 200))
-        a = ease(t / 0.5)
-        img = text(img, f'סופ״ש ב{country}', 560 - 40 * (1 - a), fit(f'סופ״ש ב{country}', BLACK, 118), alpha=a)
-        if t > 0.5:
-            p = int(deal['price'] * ease((t - 0.5) / 1.2))
-            img = text(img, f'{p} ש״ח', 800, F(BLACK, 180), alpha=ease((t - 0.5) / 0.3), box=ORANGE)
-        if t > 1.8:
-            img = text(img, f'הלוך-חזור לאדם · {direct}', 1010, F(BOLD, 58), alpha=ease((t - 1.8) / 0.4))
+        img = text(Image.new('RGBA', (W, H)), 'YG Weekend · דיל היום', 300, F(BOLD, 46), fill=(255, 240, 200))
+        img = text(img, f'סופ״ש ב{country}', 560, fit(f'סופ״ש ב{country}', BLACK, 118))
+        pop = 1 + 0.12 * math.sin(math.pi * min(1, t / 0.5)) if t < 0.5 else 1
+        img = text(img, f'{deal["price"]} ש״ח', 800, F(BLACK, int(180 * pop)), box=ORANGE)
+        img = text(img, f'הלוך-חזור לאדם · {direct}', 1010, F(BOLD, 58), alpha=ease((t - 0.3) / 0.4))
         return img
 
     def rows(title, rr):
@@ -131,15 +133,17 @@ def main():
         return f
 
     def s4(t, dur):
-        img = text(Image.new('RGBA', (W, H)), 'YG Weekend', 300, F(BOLD, 46), fill=(255, 240, 200))
-        img = text(img, 'כל הדילים לסופ״ש', 560, F(BLACK, 104), alpha=ease(t / 0.4))
-        if t > 0.5: img = text(img, 'הקישור בביו', 790, F(BLACK, 96), alpha=ease((t - 0.5) / 0.4), box=ORANGE)
-        if t > 1.1: img = text(img, 'yg-weekend.github.io', 990, F(BOLD, 58), alpha=ease((t - 1.1) / 0.4))
+        img = text(Image.new('RGBA', (W, H)), 'YG Weekend · דיל היום', 300, F(BOLD, 46), fill=(255, 240, 200))
+        img = text(img, 'רוצים את הדיל?', 540, F(BLACK, 104), alpha=ease(t / 0.4))
+        if t > 0.4: img = text(img, 'תכתבו סופש בתגובות', 760, F(BLACK, 84), alpha=ease((t - 0.4) / 0.4), box=ORANGE)
+        if t > 0.9: img = text(img, 'ונשלח לכם את הקישור בפרטי', 950, F(BOLD, 60), alpha=ease((t - 0.9) / 0.4))
+        if t > 1.3: img = text(img, 'yg-weekend.github.io', 1100, F(BOLD, 48), alpha=0.9 * ease((t - 1.3) / 0.4))
         img = text(img, f'מחיר שנבדק ב-{ddmm(checked)}.{checked[:4]} ועשוי להשתנות', 1330, F(MED, 34), alpha=0.95)
         img = text(img, f'צילומים: {credits} · Wikimedia Commons', 1385, F(MED, 26), alpha=0.85)
         return img
 
     od, rd = DAYS.get(deal['out_day'], deal['out_day']), DAYS.get(deal['ret_day'], deal['ret_day'])
+    if deal['ret_day'] == 'שבת': rd = 'מוצ״ש'
     scenes = [(s1, 3.6), (rows(f'{deal["name"]}, {country}', [f'יוצאים: {od} {ddmm(deal["out_date"])} · {deal["out_dep"]}',
                                                            f'חוזרים: {rd} {ddmm(deal["ret_date"])} · {deal["ret_dep"]}',
                                                            f'{nights} לילות של חופש']), 4.4),
