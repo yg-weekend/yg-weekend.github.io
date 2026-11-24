@@ -161,6 +161,8 @@
   .book { margin-top: auto; display: block; text-align: center; background: var(--ink); color: #fff; text-decoration: none;
           font-weight: 800; font-size: 17px; padding: 12px; border-radius: 12px; }
   .book:hover { background: #12345f; }
+  .compare { margin: -4px 0 0; text-align: center; font-size: 13.5px; color: var(--ink-2); }
+  .compare a { color: #06676a; font-weight: 700; display: inline-block; padding: 4px 2px; }
   .extras { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .extra { display: block; text-align: center; text-decoration: none; font-weight: 700; font-size: 15px;
            padding: 9px 6px; border-radius: 10px; border: 1.5px solid var(--line); color: var(--ink); background: #f6f9fc; }
@@ -206,7 +208,12 @@
   textarea.hidden { position: fixed; top: -1000px; }
 
   /* בטלפון סרגל הסינון גבוה מדי בשביל להישאר צמוד למעלה */
-  @media (max-width: 760px) { .controls { position: static; } }
+  @media (max-width: 760px) {
+    .controls { position: static; }
+    /* שמונה סופ"שים לא נכנסים בשורה: בטלפון גוללים אותם הצידה במקום לשבור לכמה שורות */
+    .wks { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; padding-bottom: 6px; }
+    .wks .chip { flex: none; white-space: nowrap; }
+  }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -361,7 +368,7 @@ function coverTiles() {
     .slice().sort((a, b) => a.price - b.price);
   const used = new Set();
   const hasPhoto = (code) => !!((state.data.photos || {})[code] || {}).url;
-  return state.data.weekends.map(w => {
+  return state.data.weekends.slice(0, 4).map(w => {   // למעלה רק ארבעת הסופ"שים הקרובים, השאר בכפתורי הסינון
     const top = [], seen = new Set();
     for (const d of all) {
       if (d.weekend !== w || seen.has(d.dest)) continue;
@@ -422,6 +429,7 @@ function card(d, i) {
         ${sh ? `<span class="pill sh">נרות ${d.candle_lighting} · צאת שבת ${d.havdalah}</span>` : ""}
       </div>
       ${d.link ? `<a class="book" href="${esc(d.link)}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
+      ${compareHtml(d)}
       ${shareHtml(d, i)}
       ${extrasHtml(d)}
       ${kosherHtml(d)}
@@ -429,6 +437,17 @@ function card(d, i) {
   </article>`;
 }
 
+// קישורים שפותחים את אותה טיסה באותם תאריכים במנועי השוואה, כדי לבדוק אם יש מחיר טוב יותר
+function compareHtml(d) {
+  const city = ((state.data.dests || {})[d.dest] || {}).city_en || d.dest;
+  const yy = (iso) => iso.slice(2).replace(/-/g, "");
+  const links = [
+    ["Google Flights", `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from TLV to ${city} on ${d.out_date} through ${d.ret_date}`)}&hl=iw&curr=ILS`],
+    ["Kayak", `https://www.kayak.com/flights/TLV-${encodeURIComponent(d.dest)}/${d.out_date}/${d.ret_date}?sort=price_a`],
+    ["Skyscanner", `https://www.skyscanner.co.il/transport/flights/tlv/${encodeURIComponent(d.dest.toLowerCase())}/${yy(d.out_date)}/${yy(d.ret_date)}/?adultsv2=1&currency=ILS`],
+  ];
+  return `<p class="compare">להשוות מחיר: ${links.map(([n, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener nofollow" aria-label="השוואת המחיר ל${esc(d.name)} ב-${n} (נפתח בחלון חדש)">${n}</a>`).join(" · ")}</p>`;
+}
 function saveHtml(d) {
   if (!d.long) return "";
   const r = regularPrice(d);
