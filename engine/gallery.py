@@ -1,6 +1,6 @@
 """Downloads 2-4 real Wikimedia Commons photos per destination into site/img/gallery/<CODE>/.
-Used for the Instagram reels and for the site. Only free licenses (CC BY / CC BY-SA / CC0 / public domain).
-Credits go to site/data/gallery.json. Runs from .github/workflows/photos.yml."""
+Picks reviewed Quality / Featured / Valued photos of each city. Only free licenses (CC BY / CC BY-SA / CC0 / PD).
+Credits go to site/data/gallery.json. Used for the Instagram reels. Runs from .github/workflows/photos.yml."""
 import json, re, time, urllib.parse, urllib.request
 from pathlib import Path
 
@@ -9,9 +9,15 @@ OUT = ROOT / "site" / "img" / "gallery"
 DATA = ROOT / "site" / "data" / "gallery.json"
 UA = "YGWeekendBot/1.0 (https://yg-weekend.github.io)"
 PER_DEST = 4
-WIDTH = 1280
-BAD = re.compile(r"map|flag|logo|coat|arms|locator|diagram|seal|emblem|icon|chart|plan|svg|banner|signature|"
-                 r"portrait|bust|statue of|coin|stamp|graph|location|montage|collage|panorama", re.I)
+WIDTH = 2048
+VERSION = 2
+BAD = re.compile(r"map|flag|logo|coat|arms|\bcoa\b|locator|diagram|seal|emblem|icon|chart|svg|banner|signature|"
+                 r"portrait|bust|statue|coin|stamp|graph|montage|collage|airport|aircraft|airplane|air force|dornier|"
+                 r"boeing|airbus|church|cathedral|basilica|chapel|mosque|tekke|minaret|monastery|temple|synagogue|"
+                 r"ceiling|fresco|dome|interior|inside|altar|relief|crucifix|cross|gull|bird|insect|flower|door|"
+                 r"shop|phone|administration|museum|painting|mural|tomb|grave|cemetery|memorial|police|military|"
+                 r"protest|demonstration|\bcar\b|\bbus\b|tram|train|metro|station|food|dish|mezquita|moschee|kirche|glise|"
+                 r"iglesia|chiesa|cerkiew|ko\u015bci|catedral|duomo|kapelle|sinagoga|\ba3\d\d\b|plane|\bp\d\d\b", re.I)
 FREE = re.compile(r"^(cc[- ]by(-sa)?[- ]?\d|cc0|public domain|pd)", re.I)
 
 
@@ -29,24 +35,29 @@ def api(host, **params):
     return {}
 
 
+def search(query, limit=50):
+    j = api("commons.wikimedia.org", action="query", list="search", srnamespace=6, srlimit=limit, srsearch=query)
+    return [x["title"] for x in j.get("query", {}).get("search", [])]
+
+
 def candidates(dest):
-    """File titles: lead image of the photo article first, then images used in the city article."""
+    city = dest.get("city_en") or dest.get("name")
     titles = []
-    for article in [dest.get("photo"), dest.get("city_en")]:
-        if not article:
-            continue
-        j = api("en.wikipedia.org", action="query", titles=article, redirects=1,
-                prop="pageimages|images", piprop="name", imlimit=60)
+    for cat in ["Quality_images", "Featured_pictures_on_Wikimedia_Commons", "Valued_images_sorted_by_promotion_date"]:
+        titles += search(f'"{city}" incategory:{cat} filetype:bitmap')
+    if dest.get("photo"):
+        j = api("en.wikipedia.org", action="query", titles=dest["photo"], redirects=1, prop="pageimages", piprop="name")
         for p in j.get("query", {}).get("pages", []):
             if p.get("pageimage"):
                 titles.append("File:" + p["pageimage"])
-            for im in p.get("images", []):
-                titles.append(im["title"])
-    seen, out = set(), []
+    seen, stems, out = set(), set(), []
     for t in titles:
-        if t not in seen and t.lower().endswith((".jpg", ".jpeg")) and not BAD.search(t):
-            seen.add(t)
-            out.append(t)
+        stem = re.sub(r"[\d_().,-]+", " ", t.lower())[:28]
+        if t in seen or stem in stems or not t.lower().endswith((".jpg", ".jpeg")) or BAD.search(t):
+            continue
+        seen.add(t)
+        stems.add(stem)
+        out.append(t)
     return out
 
 
@@ -71,15 +82,19 @@ def main():
     gallery = json.loads(DATA.read_text(encoding="utf-8")) if DATA.exists() else {}
     for d in cfg["destinations"]:
         code = d["code"]
-        if len(gallery.get(code, [])) >= 2:
+        have = gallery.get(code, [])
+        if len(have) >= 2 and all(x.get("v") == VERSION for x in have):
             continue
         print(code, d.get("city_en"))
         titles = candidates(d)
-        meta = info(titles)
+        meta = info(titles[:60])
         picked = []
         for t in titles:
             ii = meta.get(t)
-            if not ii or ii.get("mime") != "image/jpeg" or ii.get("width", 0) < 1200:
+            if not ii or ii.get("mime") != "image/jpeg":
+                continue
+            w, h = ii.get("width", 0), ii.get("height", 1)
+            if w < 1800 or w < 1.2 * h:
                 continue
             em = ii.get("extmetadata", {})
             lic = clean(em.get("LicenseShortName", {}).get("value"))
@@ -88,8 +103,13 @@ def main():
             picked.append((t, ii, lic, clean(em.get("Artist", {}).get("value"))[:80]))
             if len(picked) >= PER_DEST:
                 break
+        if len(picked) < 2 and len(have) >= 2:
+            print("   keeping the old photos")
+            continue
         folder = OUT / code
         folder.mkdir(parents=True, exist_ok=True)
+        for old in folder.glob("*.jpg"):
+            old.unlink()
         items = []
         for n, (t, ii, lic, artist) in enumerate(picked, 1):
             path = folder / f"{n}.jpg"
@@ -101,7 +121,7 @@ def main():
                 print("  ! download", t, e)
                 continue
             items.append({"file": f"img/gallery/{code}/{n}.jpg", "title": t, "credit": artist,
-                          "license": lic, "source": ii.get("descriptionurl")})
+                          "license": lic, "source": ii.get("descriptionurl"), "v": VERSION})
             time.sleep(0.5)
         gallery[code] = items
         print("  ", len(items), "photos")
