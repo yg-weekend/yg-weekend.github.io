@@ -21,7 +21,7 @@ jobs:
       - run: |
           git config user.name "deals-bot"
           git config user.email "deals-bot@users.noreply.github.com"
-          git pull --rebase
-          git add site/img/gallery site/data/gallery.json
+          git add -A site/img/gallery site/data/gallery.json
           git commit -m "תמונות יעדים $(date +%F)" || echo "אין שינוי"
+          git pull --rebase
           git push
