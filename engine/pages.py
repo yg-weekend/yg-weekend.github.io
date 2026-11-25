@@ -88,6 +88,11 @@ h2{font-size:22px;font-weight:800;margin:26px 0 10px}
 .legs dt{color:var(--ink-2);font-weight:600}.legs dd{margin:0;font-weight:600}
 .meta{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:13px;font-weight:600;color:var(--ink-2)}
 .meta .good{color:var(--ok)}.meta .sh{color:var(--ink)}
+.shm{border-radius:8px;padding:8px 10px;font-size:13px;font-weight:600;line-height:1.45;border-inline-start:5px solid}
+.shm b{display:block;font-size:15.5px;font-weight:800}
+.shm.g{background:#e7f6ee;color:#0b5c38;border-color:#0f7a4b}
+.shm.o{background:#fff1dc;color:#7a4300;border-color:#d97706}
+.shm.r{background:#fde8e6;color:#9b1c13;border-color:#c62828}
 .book{display:block;text-align:center;background:var(--brand);color:#fff;text-decoration:none;font-weight:800;font-size:15.5px;padding:9px 12px;border-radius:8px}
 .book:hover{background:var(--brand-dark)}
 .box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px}
@@ -157,7 +162,30 @@ def page(*, title: str, desc: str, canonical: str, depth: int, crumbs: str, h1: 
 """
 
 
-def deal_li(d: dict, shabbat: bool) -> str:
+def shabbat_block(d: dict, ui: dict) -> str:
+    """מרווח הביטחון לשבת, כמו באתר: מתי מגיעים למרכז העיר ביחס לכניסת השבת. הזמנים משוערים."""
+    times = f"כניסת שבת {d['candle_lighting']} · צאת שבת {d['havdalah']}"
+    if not d.get("out_arr"):
+        return f'<div class="shm g">{times}</div>'
+    mins = lambda s: int(s[:2]) * 60 + int(s[3:5])
+    out_wd = datetime.fromisoformat(d["out_date"]).weekday()          # שני=0 ... שישי=4
+    land_wd = (out_wd + (1 if d.get("out_dep") and d["out_arr"] < d["out_dep"] else 0)) % 7
+    if land_wd != 4:
+        if land_wd in (5, 6):
+            return f'<div class="shm g">{times}</div>'
+        day = ["שני", "שלישי", "רביעי", "חמישי"][land_wd]
+        return f'<div class="shm g"><b>נוחתים ביום {day}, הרבה לפני שבת</b>{times}</div>'
+    center = mins(d["out_arr"]) + ui["exit"] + (d.get("to_center_min") or 0)
+    margin = mins(d["candle_lighting"]) - center
+    if margin < 0:
+        return f'<div class="shm g">{times}</div>'
+    cls = "g" if margin >= ui["green"] else "o" if margin >= ui["orange"] else "r"
+    big = f"כ-{margin // 60}:{margin % 60:02d} שעות" if margin >= 60 else f"כ-{margin} דקות"
+    return (f'<div class="shm {cls}"><b>מגיעים למרכז העיר {big} לפני כניסת שבת</b>'
+            f'הגעה משוערת למרכז {center // 60:02d}:{center % 60:02d} · {times}</div>')
+
+
+def deal_li(d: dict, shabbat: bool, ui: dict | None = None) -> str:
     out = f"{d['out_day']} {dm(d['out_date'])} · {d.get('out_dep') or ''}"
     if d.get("out_arr"):
         out += f" (נוחת {d['out_arr']})"
@@ -168,8 +196,6 @@ def deal_li(d: dict, shabbat: bool) -> str:
         meta.append(f"<span>סופ״ש ארוך, {d['days']} ימים</span>")
     meta.append('<span class="good">מחיר חי</span>' if d.get("source") == "live"
                 else "<span>מחיר מ-48 השעות האחרונות, עשוי להשתנות</span>")
-    if shabbat:
-        meta.append(f"<span class=\"sh\">נרות {d['candle_lighting']} · צאת שבת {d['havdalah']}</span>")
     book = ""
     if d.get("link"):
         book = (f'<a class="book" href="{escape(aff(d["link"]))}" target="_blank" rel="noopener nofollow sponsored" '
@@ -183,6 +209,7 @@ def deal_li(d: dict, shabbat: bool) -> str:
   </div>
   <dl class="legs"><dt>הלוך</dt><dd>{escape(out)}</dd><dt>חזור</dt><dd>{escape(d['ret_day'])} {dm(d['ret_date'])} · {escape(ret_text(d, shabbat))}</dd></dl>
   <div class="meta">{''.join(meta)}</div>
+  {shabbat_block(d, ui) if shabbat and ui else ''}
   {book}
 </li>"""
 
@@ -203,6 +230,9 @@ def build(data: dict, cfg: dict) -> dict[str, str]:
     for x in general:
         min_price[x["dest"]] = min(min_price.get(x["dest"], x["price"]), x["price"])
     out: dict[str, str] = {}
+    sh_cfg = cfg.get("shabbat", {})
+    ui = {"exit": sh_cfg.get("airport_exit_minutes", 60), "green": sh_cfg.get("margin_green_minutes", 180),
+          "orange": sh_cfg.get("margin_orange_minutes", 90)}
 
     def others(skip: str | None) -> str:
         items = []
@@ -240,7 +270,7 @@ def build(data: dict, cfg: dict) -> dict[str, str]:
             parts.append('<ul class="list">' + "".join(deal_li(x, False) for x in mine[:MAX_DEALS]) + "</ul>")
         if mine_sh:
             parts.append(f"<h2>טיסות ל{escape(name)} לשומרי שבת</h2>")
-            parts.append('<ul class="list">' + "".join(deal_li(x, True) for x in mine_sh[:MAX_DEALS]) + "</ul>")
+            parts.append('<ul class="list">' + "".join(deal_li(x, True, ui) for x in mine_sh[:MAX_DEALS]) + "</ul>")
         info = []
         if dest.get("to_center_min"):
             pt = f", כ-{dest['pt_min']} דק׳ בתחבורה ציבורית" if dest.get("pt_min") else ""

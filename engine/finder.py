@@ -591,6 +591,10 @@ def main(argv=None) -> int:
         "currency": cfg["currency"],
         "price_filters": cfg["price_filters"],
         "kiwi_link": cfg.get("kiwi_link"),
+        # ספים להצגת "מרווח הביטחון לשבת" באתר (דקות). משנים אותם ב-config.json תחת shabbat.
+        "shabbat_ui": {"airport_exit_minutes": cfg["shabbat"].get("airport_exit_minutes", 60),
+                       "green": cfg["shabbat"].get("margin_green_minutes", 180),
+                       "orange": cfg["shabbat"].get("margin_orange_minutes", 90)},
         "dests": {d["code"]: {"city_en": d["city_en"], "kosher": d.get("kosher")} for d in cfg["destinations"]},
         "lists": lists,
     }

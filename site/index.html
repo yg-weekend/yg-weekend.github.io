@@ -143,6 +143,12 @@
   .legs dt { color: var(--ink-2); font-weight: 600; } .legs dd { margin: 0; font-weight: 600; }
   .meta { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
   .meta .good { color: var(--ok); } .meta .sh { color: var(--ink); }
+  /* מרווח הביטחון לשבת: כמה זמן לפני כניסת השבת מגיעים למרכז העיר. הצבע מלווה את הטקסט, לא מחליף אותו. */
+  .shm { border-radius: 8px; padding: 8px 10px; font-size: 13px; font-weight: 600; line-height: 1.45; border-inline-start: 5px solid; }
+  .shm b { display: block; font-size: 15.5px; font-weight: 800; }
+  .shm.g { background: #e7f6ee; color: #0b5c38; border-color: #0f7a4b; }
+  .shm.o { background: #fff1dc; color: #7a4300; border-color: #d97706; }
+  .shm.r { background: #fde8e6; color: #9b1c13; border-color: #c62828; }
   .book { display: block; margin-top: 3px; text-align: center; background: var(--brand); color: #fff; text-decoration: none;
           font-weight: 800; font-size: 15.5px; padding: 9px 12px; border-radius: 8px; }
   .book:hover { background: var(--brand-dark); }
@@ -476,6 +482,30 @@ function kosherHtml(d) {
   return `<div class="kosher"><p><b>כשרות ושבת:</b> ${esc(k.note)}</p>${links.length ? `<div class="kl">${links.join("")}</div>` : ""}</div>`;
 }
 const perWay = (d) => nis(d.price / 2);
+// מרווח הביטחון לשבת: מתי מגיעים למרכז העיר (נחיתה + יציאה מהשדה + נסיעה במונית) ביחס לכניסת השבת ביעד.
+// הספים מגיעים מ-config.json דרך deals.json (shabbat_ui). כל הזמנים משוערים, לפי לוח הטיסות.
+function shabbatMargin(d) {
+  if (!d.out_arr || !d.candle_lighting) return null;
+  const ui = Object.assign({ airport_exit_minutes: 60, green: 180, orange: 90 }, state.data.shabbat_ui || {});
+  const mins = (s) => { const [h, m] = s.split(":").map(Number); return h * 60 + m; };
+  const hm = (n) => `${String(Math.floor(n / 60)).padStart(2, "0")}:${String(n % 60).padStart(2, "0")}`;
+  // נחיתה אחרי חצות שייכת ליום שאחרי ההמראה
+  const landDay = (wday(d.out_date) + (d.out_dep && d.out_arr < d.out_dep ? 1 : 0)) % 7;
+  if (landDay !== 5) return landDay < 5 ? { cls: "g", early: DAYS[landDay] } : null;
+  const center = mins(d.out_arr) + ui.airport_exit_minutes + (d.to_center_min || 0);
+  const margin = mins(d.candle_lighting) - center;
+  if (margin < 0) return null;
+  return { cls: margin >= ui.green ? "g" : margin >= ui.orange ? "o" : "r", margin, center: hm(center) };
+}
+function shabbatHtml(d) {
+  const m = shabbatMargin(d);
+  const times = `כניסת שבת ${d.candle_lighting} · צאת שבת ${d.havdalah}`;
+  if (!m) return `<div class="shm g">${times}</div>`;
+  if (m.early) return `<div class="shm g"><b>נוחתים ביום ${m.early}, הרבה לפני שבת</b>${times}</div>`;
+  const h = Math.floor(m.margin / 60), mm = String(m.margin % 60).padStart(2, "0");
+  const big = h ? `כ-${h}:${mm} שעות` : `כ-${m.margin} דקות`;
+  return `<div class="shm ${m.cls}"><b>מגיעים למרכז העיר ${big} לפני כניסת שבת</b>הגעה משוערת למרכז ${m.center} · ${times}</div>`;
+}
 function wkLabel(iso) {
   const t = new Date(iso + "T12:00:00"); const s = new Date(t.getTime() + 3 * 864e5);
   return `${t.getDate()}/${t.getMonth() + 1} עד ${s.getDate()}/${s.getMonth() + 1}`;
@@ -543,7 +573,6 @@ function card(d, i) {
     d.long ? `<span>סופ״ש ארוך, ${d.days} ימים</span>` : "",
     drop(d) ? `<span class="good">ירד ${nis(drop(d))}</span>` : "",
     d.source === "live" ? `<span class="good">מחיר חי</span>` : `<span>מחיר מ-48 השעות האחרונות, עשוי להשתנות</span>`,
-    sh ? `<span class="sh">${ic("flame")} נרות ${d.candle_lighting} · צאת שבת ${d.havdalah}</span>` : "",
   ].join("");
   const transfer = d.to_center_min ? `<p class="note">מהשדה למרכז העיר (${d.to_center_km} ק״מ): כ-${d.to_center_min} דק׳ ברכב או במונית${d.pt_min ? `, כ-${d.pt_min} דק׳ בתחבורה ציבורית` : ""} (זמן משוער).${sh ? ` זמני השבת חושבו לפי נסיעה במונית עד מרכז העיר.` : ""}</p>` : "";
   const credit = creditHtml(d.dest, "");
@@ -558,6 +587,7 @@ function card(d, i) {
         </div>
         <dl class="legs"><dt>הלוך</dt><dd>${out}</dd><dt>חזור</dt><dd>${d.ret_day} ${dm(d.ret_date)} · ${retText(d)}</dd></dl>
         <div class="meta">${meta}</div>
+        ${sh ? shabbatHtml(d) : ""}
         ${state.more && state.more.get(d.dest) > 1 ? `<button class="alt" data-ev="more_dates" data-dest="${esc(d.name)}">${state.more.get(d.dest) === 2 ? "עוד תאריך אחד" : `עוד ${state.more.get(d.dest) - 1} תאריכים`} ל${esc(d.name)}</button>` : ""}
         ${d.link ? `<a class="book" data-ev="book_click" href="${esc(aff(d.link))}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
       </div>

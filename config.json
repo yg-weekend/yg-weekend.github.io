@@ -31,7 +31,9 @@
     "safety_minutes": 30,
     "tzeit_sun_depression_degrees": 8.5,
     "hours_after_tzeit_to_depart": 2,
-    "checkin_minutes_before_flight": 90
+    "checkin_minutes_before_flight": 90,
+    "margin_green_minutes": 180,
+    "margin_orange_minutes": 90
   },
   "destinations": [
     {
