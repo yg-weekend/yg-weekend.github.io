@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 SUB_ID = "dest"          # SubID ב-Travelpayouts: קליקים שהגיעו מעמודי היעד
 MAX_DEALS = 10           # כמה דילים להציג בכל רשימה בעמוד
+WA_GROUP = "https://chat.whatsapp.com/ETYA3fOInwl5ChSgib63QI"   # קבוצת הדילים בוואטסאפ
 
 AIRLINES = {"W6": "Wizz Air", "W4": "Wizz Air", "W9": "Wizz Air", "5W": "Wizz Air", "IZ": "ארקיע", "6H": "ישראייר",
             "LY": "אל על", "GQ": "Sky Express", "A3": "Aegean", "3F": "FlyOne", "5F": "FlyOne", "BZ": "Blue Bird",
@@ -91,6 +92,8 @@ h2{font-size:22px;font-weight:800;margin:26px 0 10px}
 .book:hover{background:var(--brand-dark)}
 .box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:15px}
 .box p{margin:0 0 6px}.box p:last-child{margin:0}
+.wa{display:inline-block;margin-top:18px;background:#0f7a4b;color:#fff;font-weight:800;font-size:15.5px;padding:9px 16px;border-radius:8px;text-decoration:none}
+.wa:hover{background:#0b6039}
 .all{display:inline-block;margin-top:14px;font-weight:800}
 .dests{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
 .dests a{display:block;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-weight:600;font-size:14.5px;text-decoration:none}
@@ -145,7 +148,7 @@ def page(*, title: str, desc: str, canonical: str, depth: int, crumbs: str, h1: 
 </div></header>
 <main id="main" tabindex="-1">
 {body}
-<footer><p>{FOOT}</p><p><a href="{up}accessibility.html">הצהרת נגישות</a></p></footer>
+<footer><p>{FOOT}</p><p><a href="https://wa.me/972515416827" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ (נפתח בחלון חדש)">דברו איתנו בוואטסאפ</a> · <a href="{up}accessibility.html">הצהרת נגישות</a></p></footer>
 </main>
 <script src="{up}a11y.js"></script>
 </body>
@@ -246,6 +249,8 @@ def build(data: dict, cfg: dict) -> dict[str, str]:
         if info:
             parts.append(f"<h2>טוב לדעת על {escape(name)}</h2>")
             parts.append('<div class="box">' + "".join(info) + "</div>")
+        parts.append(f'<p><a class="wa" href="{WA_GROUP}" target="_blank" rel="noopener" '
+                     f'aria-label="הצטרפות לקבוצת הדילים בוואטסאפ (נפתח בחלון חדש)">הצטרפו לקבוצת הדילים בוואטסאפ</a></p>')
         parts.append(f'<a class="all" href="../../">לכל הדילים לסופ״ש, מכל היעדים</a>')
         parts.append("<h2>יעדים נוספים</h2>")
         parts.append(others(code))
