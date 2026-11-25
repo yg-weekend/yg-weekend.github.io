@@ -110,7 +110,14 @@ def main():
         shabbat_rows = [land + (f' · שבת ב-{deal["candle_lighting"]}' if arr_day == 'שישי' else ', הרבה לפני שבת'),
                         'בית חב״ד עם ארוחות שבת' if kn in ('full', 'chabad', 'seasonal') else 'יש אפשרויות כשרות באזור',
                         f'{deal["to_center_min"]} דקות מהשדה למרכז']
-    credits = ' · '.join(sorted({(p['credit'] or 'Wikimedia') for p in photos}))[:90]
+    # Photo credit line for the END OF THE CAPTION (under the hashtags), not for the video itself:
+    # names grouped by licence, only for the photos used in this reel, nothing truncated.
+    by_lic = {}
+    for p in photos:
+        names = by_lic.setdefault(p.get('license') or '', [])
+        name = p.get('credit') or 'Wikimedia'
+        if name not in names: names.append(name)
+    credit_line = '📷 ' + ', '.join(', '.join(n) + (f' ({lic})' if lic else '') for lic, n in sorted(by_lic.items(), key=lambda kv: kv[0] == '')) + ' · Wikimedia Commons'
 
     def s1(t, dur):
         img = text(Image.new('RGBA', (W, H)), 'YG Weekend · דיל היום', 300, F(BOLD, 46), fill=(255, 240, 200))
@@ -139,7 +146,6 @@ def main():
         if t > 0.9: img = text(img, 'ונשלח לכם את הקישור בפרטי', 950, F(BOLD, 60), alpha=ease((t - 0.9) / 0.4))
         if t > 1.3: img = text(img, 'yg-weekend.github.io', 1100, F(BOLD, 48), alpha=0.9 * ease((t - 1.3) / 0.4))
         img = text(img, f'מחיר שנבדק ב-{ddmm(checked)}.{checked[:4]} ועשוי להשתנות', 1330, F(MED, 34), alpha=0.95)
-        img = text(img, f'צילומים: {credits} · Wikimedia Commons', 1385, F(MED, 26), alpha=0.85)
         return img
 
     od, rd = DAYS.get(deal['out_day'], deal['out_day']), DAYS.get(deal['ret_day'], deal['ret_day'])
@@ -174,13 +180,15 @@ def main():
     total = sum(d for _, d in scenes)
     lst_txt = f'{WORK}/{code}_list.txt'
     open(lst_txt, 'w').write(''.join(f"file '{f}'\n" for f in files))
-    subprocess.run(['python3', os.path.join(HERE, 'music.py'), str(total), f'{WORK}/music.wav'], check=True)
+    subprocess.run([sys.executable, os.path.join(HERE, 'music.py'), str(total), f'{WORK}/music.wav'], check=True)
     os.makedirs(OUTDIR, exist_ok=True)
     final = f'{OUTDIR}/yg-weekend-{code.lower()}-reel.mp4'
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', lst_txt, '-c', 'copy', f'{WORK}/{code}_v.mp4'], check=True)
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', f'{WORK}/{code}_v.mp4', '-i', f'{WORK}/music.wav', '-map', '0:v', '-map', '1:a',
                     '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', final], check=True)
     print(final, total, deal['price'], deal['out_date'], [p['file'] for p in photos])
+    open(final[:-4] + '.credit.txt', 'w', encoding='utf-8').write(credit_line + '\n')
+    print(credit_line)
 
 if __name__ == '__main__':
     main()

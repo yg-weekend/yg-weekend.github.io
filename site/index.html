@@ -265,7 +265,7 @@
       <a data-ev="social_tt" href="https://www.tiktok.com/@noa_gaba" target="_blank" rel="noopener" aria-label="YG Weekend בטיקטוק (נפתח בחלון חדש)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2.3 1.8 3.8 4.1 4v3.1c-1.5 0-2.9-.4-4.1-1.2v6.2c0 3.3-2.6 5.9-5.9 5.9S4.8 18.4 4.8 15.1s2.6-5.9 5.9-5.9c.3 0 .6 0 .9.1v3.2c-.3-.1-.6-.2-.9-.2-1.5 0-2.7 1.2-2.7 2.8s1.2 2.8 2.7 2.8 2.8-1.2 2.8-2.8V3z"/></svg></a>
       <a href="https://wa.me/972515416827?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%20YG%20Weekend%20%D7%95%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%98%D7%99%D7%A1%D7%94%20%D7%9C%D7%A1%D7%95%D7%A4%D7%B4%D7%A9%20%E2%9C%88%EF%B8%8F" data-ev="wa_chat" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ (נפתח בחלון חדש)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M9 10h.01M12 10h.01M15 10h.01"/></svg></a>
     </div>
-    <p id="foot"></p><p><a href="https://wa.me/972515416827?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%20YG%20Weekend%20%D7%95%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%98%D7%99%D7%A1%D7%94%20%D7%9C%D7%A1%D7%95%D7%A4%D7%B4%D7%A9%20%E2%9C%88%EF%B8%8F" data-ev="wa_chat" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ (נפתח בחלון חדש)">דברו איתנו בוואטסאפ</a> · <a href="dest/">טיסות לפי יעד</a> · <a href="accessibility.html">הצהרת נגישות</a></p></footer>
+    <p id="foot"></p><p><a href="https://wa.me/972515416827?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%20YG%20Weekend%20%D7%95%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%98%D7%99%D7%A1%D7%94%20%D7%9C%D7%A1%D7%95%D7%A4%D7%B4%D7%A9%20%E2%9C%88%EF%B8%8F" data-ev="wa_chat" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ (נפתח בחלון חדש)">דברו איתנו בוואטסאפ</a> · <a href="dest/">טיסות לפי יעד</a> · <a href="accessibility.html">הצהרת נגישות</a> · <a href="privacy.html">מדיניות פרטיות</a></p></footer>
 </main>
 
 <div class="toast" id="toast" role="status"></div>
@@ -378,6 +378,49 @@ const AIRLINES = {"W6":"Wizz Air","W4":"Wizz Air","W9":"Wizz Air","5W":"Wizz Air
   "OS":"Austrian","LH":"Lufthansa","LX":"SWISS","SN":"Brussels Airlines","UX":"Air Europa","QS":"Smartwings","FB":"Bulgaria Air","SKY express":"Sky Express","TK":"Turkish Airlines","PC":"Pegasus","FZ":"flydubai","EY":"Etihad","H4":"HiSky"};
 const airlineName = (a) => AIRLINES[a] || a;
 // אייקונים בקו דק (מבוססים על ספריית Lucide, רישיון ISC). משמשים במקום אימוג'י.
+/*
+  Lucide (https://lucide.dev), the source of the icon paths below. Licence notice, as the ISC licence requires:
+
+  ISC License
+
+  Copyright (c) 2026 Lucide Icons and Contributors
+
+  Permission to use, copy, modify, and/or distribute this software for any
+  purpose with or without fee is hereby granted, provided that the above
+  copyright notice and this permission notice appear in all copies.
+
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+  Two of the icons used here (chevron-down, smartphone) are derived from the Feather project:
+
+  The MIT License (MIT) (for the icons listed above)
+
+  Copyright (c) 2013-present Cole Bemis
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
 const ICONS = {
   chevron: '<path d="m6 9 6 6 6-6"/>',
   flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',

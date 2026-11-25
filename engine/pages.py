@@ -149,7 +149,7 @@ def page(*, title: str, desc: str, canonical: str, depth: int, crumbs: str, h1: 
 </div></header>
 <main id="main" tabindex="-1">
 {body}
-<footer><p>{FOOT}</p><p><a href="https://wa.me/972515416827?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%20YG%20Weekend%20%D7%95%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%98%D7%99%D7%A1%D7%94%20%D7%9C%D7%A1%D7%95%D7%A4%D7%B4%D7%A9%20%E2%9C%88%EF%B8%8F" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ (נפתח בחלון חדש)">דברו איתנו בוואטסאפ</a> · <a href="{up}accessibility.html">הצהרת נגישות</a></p></footer>
+<footer><p>{FOOT}</p><p><a href="https://wa.me/972515416827?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%20YG%20Weekend%20%D7%95%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%98%D7%99%D7%A1%D7%94%20%D7%9C%D7%A1%D7%95%D7%A4%D7%B4%D7%A9%20%E2%9C%88%EF%B8%8F" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ (נפתח בחלון חדש)">דברו איתנו בוואטסאפ</a> · <a href="{up}accessibility.html">הצהרת נגישות</a> · <a href="{up}privacy.html">מדיניות פרטיות</a></p></footer>
 </main>
 <script src="{up}a11y.js"></script>
 </body>
@@ -283,6 +283,7 @@ def build(data: dict, cfg: dict) -> dict[str, str]:
     urls += [(f"{base}/dest/{slugs[d['code']]}/", "daily") for d in dests]
     rows = "".join(f"  <url><loc>{u}</loc><lastmod>{day}</lastmod><changefreq>{f}</changefreq></url>\n" for u, f in urls)
     rows += f"  <url><loc>{base}/accessibility.html</loc><changefreq>yearly</changefreq></url>\n"
+    rows += f"  <url><loc>{base}/privacy.html</loc><changefreq>yearly</changefreq></url>\n"
     out["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + rows + "</urlset>\n")
     return out
