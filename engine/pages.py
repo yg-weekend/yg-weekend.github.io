@@ -137,6 +137,7 @@ def page(*, title: str, desc: str, canonical: str, depth: int, crumbs: str, h1: 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>{CSS}</style>
+<script data-goatcounter="https://yg-weekend.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">דלג לתוכן</a>
@@ -148,7 +149,7 @@ def page(*, title: str, desc: str, canonical: str, depth: int, crumbs: str, h1: 
 </div></header>
 <main id="main" tabindex="-1">
 {body}
-<footer><p>{FOOT}</p><p><a href="https://wa.me/972515416827" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ (נפתח בחלון חדש)">דברו איתנו בוואטסאפ</a> · <a href="{up}accessibility.html">הצהרת נגישות</a></p></footer>
+<footer><p>{FOOT}</p><p><a href="https://wa.me/972515416827?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%20YG%20Weekend%20%D7%95%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%98%D7%99%D7%A1%D7%94%20%D7%9C%D7%A1%D7%95%D7%A4%D7%B4%D7%A9%20%E2%9C%88%EF%B8%8F" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ (נפתח בחלון חדש)">דברו איתנו בוואטסאפ</a> · <a href="{up}accessibility.html">הצהרת נגישות</a></p></footer>
 </main>
 <script src="{up}a11y.js"></script>
 </body>
@@ -172,6 +173,7 @@ def deal_li(d: dict, shabbat: bool) -> str:
     book = ""
     if d.get("link"):
         book = (f'<a class="book" href="{escape(aff(d["link"]))}" target="_blank" rel="noopener nofollow sponsored" '
+                f'data-goatcounter-click="click/book/{d["dest"]}" data-goatcounter-title="{escape(d["name"])} · {round(d["price"])} ₪" '
                 f'aria-label="לבדוק ולהזמין טיסה ל{escape(d["name"])} ב-{nis(d["price"])}, '
                 f'יציאה {dm(d["out_date"])} (נפתח בחלון חדש)">לבדוק ולהזמין</a>')
     return f"""<li class="deal">
