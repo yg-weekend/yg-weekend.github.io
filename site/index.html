@@ -369,8 +369,9 @@ function wkLabel(iso) {
 }
 function retText(d) {
   if (d.ret_dep) return d.ret_dep;
-  if (d.ret_from_hour != null) return `אחרי ${String(d.ret_from_hour).padStart(2, "0")}:00`;
-  return "";
+  // "אחרי HH:00" אומר משהו רק במוצ"ש ברשימת שומרי השבת (השעה שממנה מותר לטוס). בכל מקרה אחר זו סתם תחילת חלון החיפוש.
+  if (d.ret_from_hour != null && state.list === "shabbat" && wday(d.ret_date) === 6) return `אחרי ${String(d.ret_from_hour).padStart(2, "0")}:00`;
+  return "השעה באתר ההזמנה";
 }
 const drop = (d) => d.prev_price && d.prev_price > d.price ? d.prev_price - d.price : 0;
 

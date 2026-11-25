@@ -307,6 +307,13 @@ def build_lists(cfg: dict, cached: list[Trip], thursdays: list[date],
                 if live and (st is None or ok_for_shabbat(live, st)):
                     if t.link and "aviasales" in t.link:
                         live.link = t.link             # שומרים קישור שותפים כשיש
+                    # Google מחזיר בחיפוש אחד רק את טיסת ההלוך. כשזו אותה טיסת הלוך כמו בדיל השמור
+                    # (אותו תאריך ואותה שעת המראה), לוקחים ממנו את שעת החזרה במקום להשאיר "אחרי 06:00".
+                    if (live.ret_dep is None and t.ret_dep is not None and t.out_dep is not None
+                            and live.out_dep is not None and live.out_dep == t.out_dep
+                            and (st is None or t.ret_dep >= st.return_after
+                                 or date.fromisoformat(t.ret_date).weekday() != 5)):
+                        live.ret_dep = t.ret_dep
                     pool.append(live)
         print(f"  SerpApi: {budget.used} חיפושים בהרצה הזו")
 
