@@ -295,6 +295,25 @@ const SRC = (() => {
   return r && !r.includes(location.host) ? "other" : "direct";
 })();
 const aff = (url, src = SRC) => url ? String(url).replace(/((?:sh)?marker=)(\d+)(?=&|$)/, `$1$2.${src}`) : url;
+// מדידה ב-Google Analytics 4. כל עוד GA_ID ריק שום דבר לא נטען ושום דבר לא נשלח.
+// כדי להפעיל: להדביק כאן את מזהה המדידה מהחשבון (נראה כמו "G-AB12CD34EF").
+const GA_ID = "";
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+if (GA_ID) {
+  const s = document.createElement("script"); s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+  document.head.appendChild(s);
+  gtag("js", new Date());
+  gtag("config", GA_ID, { traffic_src: SRC });
+}
+const track = (name, params) => { if (GA_ID) gtag("event", name, Object.assign({ traffic_src: SRC, deal_list: state.list }, params)); };
+// כל כפתור או קישור עם data-ev נמדד כאירוע, יחד עם היעד והמחיר של הכרטיס שהוא נמצא בו
+document.addEventListener("click", (e) => {
+  const el = e.target.closest("[data-ev]"); if (!el) return;
+  const c = el.closest(".deal");
+  track(el.dataset.ev, c ? { destination: c.dataset.code, price: +c.dataset.price, price_source: c.dataset.src } : {});
+});
 // באיזה אתר ממשיכים להזמין, כדי שהמעבר לא יפתיע
 function bookerName(url) {
   const h = (() => { try { return new URL(url).hostname; } catch (e) { return ""; } })();
@@ -449,7 +468,7 @@ function card(d, i) {
   const transfer = d.to_center_min ? `<p class="note">מהשדה למרכז העיר (${d.to_center_km} ק״מ): כ-${d.to_center_min} דק׳ ברכב או במונית${d.pt_min ? `, כ-${d.pt_min} דק׳ בתחבורה ציבורית` : ""} (זמן משוער).${sh ? ` זמני השבת חושבו לפי נסיעה במונית עד מרכז העיר.` : ""}</p>` : "";
   const credit = creditHtml(d.dest, "");
   // השורה הראשית: תמונה קטנה, יעד, מחיר, זמנים וכפתור הזמנה. כל השאר נפתח ב"עוד פרטים".
-  return `<article class="deal" role="listitem">
+  return `<article class="deal" role="listitem" data-code="${d.dest}" data-price="${d.price}" data-src="${d.source}">
     <div class="row">
       <div class="thumb" style="background-image:${fallbackBg(d.dest)}" role="img" aria-label="צילום מ${esc(d.name)}">${photoImg(d.dest)}</div>
       <div class="body">
@@ -459,9 +478,9 @@ function card(d, i) {
         </div>
         <dl class="legs"><dt>הלוך</dt><dd>${out}</dd><dt>חזור</dt><dd>${d.ret_day} ${dm(d.ret_date)} · ${retText(d)}</dd></dl>
         <div class="meta">${meta}</div>
-        ${d.link ? `<a class="book" href="${esc(aff(d.link))}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
+        ${d.link ? `<a class="book" data-ev="book_click" href="${esc(aff(d.link))}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
         ${d.link && d.source !== "live" ? `<p class="via">מחיר מ-48 השעות האחרונות, עשוי להשתנות</p>` : ""}
-        ${state.more && state.more.get(d.dest) > 1 ? `<button class="alt" data-dest="${esc(d.name)}">${state.more.get(d.dest) === 2 ? "עוד תאריך אחד" : `עוד ${state.more.get(d.dest) - 1} תאריכים`} ל${esc(d.name)}</button>` : ""}
+        ${state.more && state.more.get(d.dest) > 1 ? `<button class="alt" data-ev="more_dates" data-dest="${esc(d.name)}">${state.more.get(d.dest) === 2 ? "עוד תאריך אחד" : `עוד ${state.more.get(d.dest) - 1} תאריכים`} ל${esc(d.name)}</button>` : ""}
       </div>
     </div>
     <details class="dx">
@@ -487,9 +506,9 @@ function saveHtml(d) {
 function extrasHtml(d) {
   // כל הקישורים כאן מגיעים מהמנוע רק כשנוצר קישור שותפים (כלומר יש עמלה). בלי קישור כזה לא מציגים כלום.
   const items = [];
-  if (d.hotel_link) items.push(`<a class="btn" href="${esc(aff(d.hotel_link))}" target="_blank" rel="noopener" aria-label="מלונות ב${esc(d.name)} לתאריכי הטיסה (נפתח בחלון חדש)">${ic("bed")} מלון ב${esc(d.name)}</a>`);
-  if (d.esim_link) items.push(`<a class="btn" href="${esc(aff(d.esim_link))}" target="_blank" rel="noopener" aria-label="eSIM לגלישה ב${esc(d.name)} (נפתח בחלון חדש)">${ic("phone")} eSIM לגלישה</a>`);
-  if (d.compare_link) items.push(`<a class="btn" href="${esc(aff(d.compare_link))}" target="_blank" rel="noopener nofollow sponsored" aria-label="השוואת המחיר ל${esc(d.name)} ב-Kiwi (נפתח בחלון חדש)">${ic("scale")} להשוות ב-Kiwi</a>`);
+  if (d.hotel_link) items.push(`<a class="btn" data-ev="hotel_click" href="${esc(aff(d.hotel_link))}" target="_blank" rel="noopener" aria-label="מלונות ב${esc(d.name)} לתאריכי הטיסה (נפתח בחלון חדש)">${ic("bed")} מלון ב${esc(d.name)}</a>`);
+  if (d.esim_link) items.push(`<a class="btn" data-ev="esim_click" href="${esc(aff(d.esim_link))}" target="_blank" rel="noopener" aria-label="eSIM לגלישה ב${esc(d.name)} (נפתח בחלון חדש)">${ic("phone")} eSIM לגלישה</a>`);
+  if (d.compare_link) items.push(`<a class="btn" data-ev="compare_click" href="${esc(aff(d.compare_link))}" target="_blank" rel="noopener nofollow sponsored" aria-label="השוואת המחיר ל${esc(d.name)} ב-Kiwi (נפתח בחלון חדש)">${ic("scale")} להשוות ב-Kiwi</a>`);
   return items.length ? `<div class="btnrow">${items.join("")}</div>` : "";
 }
 
@@ -513,8 +532,8 @@ function dealText(d) {
 }
 function shareHtml(d, i, cls) {
   return `<div class="btnrow">
-    <a class="btn" href="https://wa.me/?text=${encodeURIComponent(dealText(d))}" target="_blank" rel="noopener" aria-label="שליחת הדיל ל${esc(d.name)} בוואטסאפ (נפתח בחלון חדש)">${ic("chat")} שליחה בוואטסאפ</a>
-    <button class="btn" data-copy="${i}" aria-label="העתקת הדיל ל${esc(d.name)}">${ic("copy")} העתקה</button>
+    <a class="btn" data-ev="share_whatsapp" href="https://wa.me/?text=${encodeURIComponent(dealText(d))}" target="_blank" rel="noopener" aria-label="שליחת הדיל ל${esc(d.name)} בוואטסאפ (נפתח בחלון חדש)">${ic("chat")} שליחה בוואטסאפ</a>
+    <button class="btn" data-ev="share_copy" data-copy="${i}" aria-label="העתקת הדיל ל${esc(d.name)}">${ic("copy")} העתקה</button>
   </div>`;
 }
 
@@ -625,6 +644,7 @@ function init(data) {
     toast(await copyText(dealText(d)) ? "הדיל הועתק. עכשיו מדביקים בוואטסאפ" : "ההעתקה לא עבדה. נסו \"שליחה בוואטסאפ\"");
   });
   $("#foot").textContent = "המחירים לאדם, בשקלים. השעות לפי השעון המקומי. זמני שבת מחושבים לפי השקיעה ביעד, כדאי לוודא מול לוח מקומי. התמונות מוויקישיתוף. חלק מהקישורים הם קישורי שותפים: אנחנו עשויים לקבל עמלה, בלי עלות נוספת עבורכם.";
+  if (GA_ID) $("#foot").textContent += " האתר משתמש ב-Google Analytics, כולל עוגיות, כדי למדוד את השימוש בו באופן מצטבר.";
   render();
 }
 
