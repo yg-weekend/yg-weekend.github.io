@@ -140,6 +140,9 @@
           font-weight: 800; font-size: 15.5px; padding: 9px 12px; border-radius: 8px; }
   .book:hover { background: var(--brand-dark); }
   .via { margin: 0; text-align: center; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+  .alt { border: 0; background: transparent; font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); cursor: pointer;
+         padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; }
+  .alt:hover { color: var(--brand-dark); }
   .cover .trust { margin: -8px 0 18px; font-size: 14.5px; font-weight: 600; opacity: .88; max-width: 620px; text-shadow: 0 1px 8px rgba(0,0,0,.55); }
   /* "עוד פרטים": שיתוף, מלון, eSIM, כשרות והשוואת מחיר נפתחים רק למי שרוצה */
   .dx summary { list-style: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px;
@@ -337,6 +340,18 @@ function creditHtml(code, cls) {
 }
 
 function deals() {
+  const list = dealsAll();
+  state.total = list.length; state.more = null;
+  // בלי בחירת סופ"ש ובלי חיפוש אותו יעד חוזר שוב ושוב (פעם לכל שבוע). מציגים את הזול ביותר לכל יעד,
+  // ובכרטיס כפתור "עוד תאריכים" שפותח את כל הדילים של היעד. הרשימה כבר ממוינת לפי מחיר.
+  if (state.wk || state.q) return list;
+  const n = new Map();
+  list.forEach(d => n.set(d.dest, (n.get(d.dest) || 0) + 1));
+  state.more = n;
+  const first = new Set();
+  return list.filter(d => { if (first.has(d.dest)) return false; first.add(d.dest); return true; });
+}
+function dealsAll() {
   const all = state.data.lists[state.list] || [];
   let list = all.filter(d => (!state.max || d.price <= state.max) && (!state.wk || d.weekend === state.wk) && (!state.direct || !d.stops) && matchQ(d));
   if (state.mode === "weekend") return list.filter(d => !d.long);
@@ -446,6 +461,7 @@ function card(d, i) {
         <div class="meta">${meta}</div>
         ${d.link ? `<a class="book" href="${esc(aff(d.link))}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
         ${d.link && d.source !== "live" ? `<p class="via">מחיר מ-48 השעות האחרונות, עשוי להשתנות</p>` : ""}
+        ${state.more && state.more.get(d.dest) > 1 ? `<button class="alt" data-dest="${esc(d.name)}">${state.more.get(d.dest) === 2 ? "עוד תאריך אחד" : `עוד ${state.more.get(d.dest) - 1} תאריכים`} ל${esc(d.name)}</button>` : ""}
       </div>
     </div>
     <details class="dx">
@@ -522,7 +538,7 @@ function render() {
   renderCover();
   const rest = list.slice(0, state.shown);
   const modeTxt = state.mode === "flex" ? (state.day != null ? ` עם יציאה ב${DAYS[state.day]}` : " (הזול לכל יעד, כולל סופ״ש ארוך)") : "";
-  $("#count").textContent = list.length ? `${list.length} דילים${modeTxt}${state.wk ? ` לסופ"ש ${wkLabel(state.wk)}` : ""}${state.max ? ` עד ${nis(state.max)}` : ""}${state.direct ? " · ישירות בלבד" : ""}` : "";
+  $("#count").textContent = list.length ? `${state.more ? `${list.length} יעדים, הזול ביותר לכל יעד (${state.total} דילים בסך הכול)` : `${list.length} דילים`}${modeTxt}${state.wk ? ` לסופ"ש ${wkLabel(state.wk)}` : ""}${state.max ? ` עד ${nis(state.max)}` : ""}${state.direct ? " · ישירות בלבד" : ""}` : "";
   $("#grid").innerHTML = list.length ? rest.map((d, i) => card(d, i)).join("") :
     `<div class="empty">${state.q ? `לא מצאנו דילים ל"${esc(state.q)}". נסו יעד אחר, או לבחור "כל הסופ"שים" ו"כל המחירים".` : `אין דילים שמתאימים לסינון. אפשר לבחור סופ"ש אחר או תקרת מחיר גבוהה יותר.`}</div>`;
   const left = list.length - state.shown;
@@ -596,6 +612,13 @@ function init(data) {
   $("#qlist").innerHTML = [...byCountry.keys()].sort(he).map(c => `<option value="${esc(c)}" label="${esc([...byCountry.get(c)].sort(he).join(", "))}"></option>`)
     .concat([...cities].sort(he).map(n => `<option value="${esc(n)}"></option>`)).join("");
   $("#q").oninput = (e) => { state.q = e.target.value.trim(); state.shown = 20; render(); };
+  // "עוד תאריכים ל..." בכרטיס: ממלא את החיפוש בשם היעד, וכך נפתחים כל הדילים שלו
+  $("#grid").addEventListener("click", (e) => {
+    const b = e.target.closest(".alt"); if (!b) return;
+    $("#q").value = state.q = b.dataset.dest; state.shown = 20; render();
+    $("#main").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    $("#main").focus({ preventScroll: true });
+  });
   document.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-copy]"); if (!b) return;
     const d = (state.cur || [])[+b.dataset.copy]; if (!d) return;
