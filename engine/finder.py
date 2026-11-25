@@ -510,6 +510,66 @@ def add_extras(lists: dict, cfg: dict, token: str | None, marker: str) -> None:
         d["compare_link"] = cache.get(ex["kiwi"])
 
 
+# ---------------------------------------------------------------- flight-time changes
+def _slot(d: dict) -> str:
+    """אותה טיסה מריצה לריצה: יעד, תאריכים וחברת תעופה."""
+    return f"{d['dest']}|{d['out_date']}|{d['ret_date']}|{d.get('airline', '')}"
+
+
+def detect_time_changes(state: dict, lists: dict, today_iso: str, now_iso: str) -> tuple[dict, list[dict]]:
+    """משווה את שעות הטיסה של דילים שפורסמו ברשימת שומרי השבת לשעות שלהם בריצה הקודמת.
+
+    state = {"deals": {slot: {...שעות...}}, "warned": {slot: {...}}} מהריצה הקודמת.
+    דיל ששעותיו השתנו וכבר לא עומד בכללי השבת יצא מהרשימה (הסינון הרגיל עושה את זה),
+    והכרטיס שלו ברשימה הכללית מסומן time_changed כדי שמי שראה אותו קודם יידע.
+    מחזיר (state חדש, רשימת שינויים מהריצה הזו).
+    """
+    fields = ("out_dep", "out_arr", "ret_dep")
+    sh = {_slot(d): d for d in lists.get("shabbat", [])}
+    gen = {_slot(d): d for d in lists.get("general", [])}
+    prev, warned = state.get("deals", {}), dict(state.get("warned", {}))
+    changes: list[dict] = []
+    for slot, old in prev.items():
+        if old.get("out_date", "") < today_iso:
+            continue
+        cur = sh.get(slot) or gen.get(slot)
+        if cur is None:
+            continue
+        # משווים רק שדות שידועים בשני הצדדים (למחיר חי אין שעת חזרה)
+        diff = [k for k in fields if old.get(k) and cur.get(k) and old[k] != cur[k]]
+        if not diff:
+            continue
+        still = slot in sh
+        when = f"{int(old['out_date'][8:])}/{int(old['out_date'][5:7])}–{int(old['ret_date'][8:])}/{int(old['ret_date'][5:7])}"
+        parts = []
+        if "out_dep" in diff:
+            parts.append(f"המראה {old['out_dep']} ← {cur['out_dep']}")
+        if "out_arr" in diff:
+            parts.append(f"נחיתה {old['out_arr']} ← {cur['out_arr']}")
+        if "ret_dep" in diff:
+            parts.append(f"חזרה {old['ret_dep']} ← {cur['ret_dep']}")
+        tail = "עדיין בזמן לשבת." if still else "כבר לא מתאים לרשימת שומרי השבת."
+        changes.append({
+            "at": now_iso, "dest": old["dest"], "name": old.get("name", old["dest"]),
+            "out_date": old["out_date"], "ret_date": old["ret_date"], "airline": old.get("airline", ""),
+            "old": {k: old.get(k) for k in fields}, "new": {k: cur.get(k) for k in fields},
+            "still_shabbat": still,
+            "text": f"⚠️ שינוי שעות: {old.get('name', old['dest'])} {when}. {', '.join(parts)}. {tail}",
+        })
+        if not still:
+            warned[slot] = {"since": now_iso, "out_date": old["out_date"]}
+    # הסימון נשאר על הכרטיס הכללי כל עוד הטיסה עוד לא יצאה והיא לא חזרה לרשימת השבת
+    warned = {s: w for s, w in warned.items() if w.get("out_date", "") >= today_iso and s not in sh}
+    for slot in warned:
+        if slot in gen:
+            gen[slot]["time_changed"] = True
+    new_state = {"deals": {s: {"dest": d["dest"], "name": d["name"], "out_date": d["out_date"], "ret_date": d["ret_date"],
+                               "airline": d.get("airline", ""), **{k: d.get(k) for k in fields}}
+                           for s, d in sh.items()},
+                 "warned": warned}
+    return new_state, changes
+
+
 # ---------------------------------------------------------------- demo data
 def demo_trips(cfg: dict, thursdays: list[date]) -> list[Trip]:
     rnd = random.Random(42)
@@ -570,6 +630,21 @@ def main(argv=None) -> int:
         cached, serp_key = demo_trips(cfg, thursdays), None
 
     lists = build_lists(cfg, cached, thursdays, serp_key, today)
+    if not args.demo:   # שינויי שעות בדילים של רשימת השבת מאז הריצה הקודמת
+        try:
+            now_iso = datetime.now(ISRAEL_TZ).isoformat(timespec="minutes")
+            st, changes = detect_time_changes(_load_json(DATA_DIR / "shabbat_state.json", {}), lists, today.isoformat(), now_iso)
+            _save_json(DATA_DIR / "shabbat_state.json", st)
+            log = _load_json(DATA_DIR / "changes.json", {})
+            recent = (changes + log.get("recent", []))[:40]
+            _save_json(DATA_DIR / "changes.json", {
+                "generated_at": now_iso, "changes": changes, "recent": recent,
+                "whatsapp_text": "\n".join(c["text"] for c in changes)})
+            print(f"  שינויי שעות: {len(changes)}")
+            for c in changes:
+                print("   " + c["text"])
+        except Exception as e:  # noqa: BLE001 - בדיקת השינויים לא מפילה את עדכון הדילים
+            print(f"  ! שינויי שעות: {_safe(e)}", file=sys.stderr)
     if args.demo:   # בדמו ממציאים "מחיר שבוע שעבר" כדי לראות את ההשוואה
         rnd = random.Random(7)
         for deals in lists.values():

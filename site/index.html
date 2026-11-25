@@ -143,6 +143,7 @@
   .legs dt { color: var(--ink-2); font-weight: 600; } .legs dd { margin: 0; font-weight: 600; }
   .meta { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
   .meta .good { color: var(--ok); } .meta .sh { color: var(--ink); }
+  .meta .warn { color: #9b1c13; font-weight: 700; }
   /* מרווח הביטחון לשבת: כמה זמן לפני כניסת השבת מגיעים למרכז העיר. הצבע מלווה את הטקסט, לא מחליף אותו. */
   .shm { border-radius: 8px; padding: 8px 10px; font-size: 13px; font-weight: 600; line-height: 1.45; border-inline-start: 5px solid; }
   .shm b { display: block; font-size: 15.5px; font-weight: 800; }
@@ -571,6 +572,7 @@ function card(d, i) {
     `<span>${d.stops ? "עצירה אחת" : "טיסה ישירה"}</span>`,
     d.airline ? `<span>${esc(airlineName(d.airline))}</span>` : "",
     d.long ? `<span>סופ״ש ארוך, ${d.days} ימים</span>` : "",
+    d.time_changed ? `<span class="warn">⚠️ שעת הטיסה השתנתה, כבר לא ברשימת שומרי השבת</span>` : "",
     drop(d) ? `<span class="good">ירד ${nis(drop(d))}</span>` : "",
     d.source === "live" ? `<span class="good">מחיר חי</span>` : `<span>מחיר מ-48 השעות האחרונות, עשוי להשתנות</span>`,
   ].join("");
