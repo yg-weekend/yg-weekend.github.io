@@ -139,6 +139,8 @@
   .book { display: block; margin-top: 3px; text-align: center; background: var(--brand); color: #fff; text-decoration: none;
           font-weight: 800; font-size: 15.5px; padding: 9px 12px; border-radius: 8px; }
   .book:hover { background: var(--brand-dark); }
+  .via { margin: 0; text-align: center; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+  .cover .trust { margin: -8px 0 18px; font-size: 14.5px; font-weight: 600; opacity: .88; max-width: 620px; text-shadow: 0 1px 8px rgba(0,0,0,.55); }
   /* "עוד פרטים": שיתוף, מלון, eSIM, כשרות והשוואת מחיר נפתחים רק למי שרוצה */
   .dx summary { list-style: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px;
                 padding: 7px 14px; border-top: 1px solid var(--line); font-size: 13.5px; font-weight: 700; color: var(--ink-2); }
@@ -260,6 +262,30 @@ function matchQ(d) {
 const $ = (s) => document.querySelector(s);
 const nis = (n) => Math.round(n).toLocaleString("he-IL") + " ₪";
 const dm = (iso) => { const [, m, d] = iso.split("-"); return `${+d}/${+m}`; };
+// מקור הגלישה (אינסטגרם / פייסבוק / טיקטוק / וואטסאפ / פרסומת). נכנס לכל קישור שותפים כ-SubID של Travelpayouts,
+// כדי לראות בדוחות שם מאיזה ערוץ הגיעו הקליקים וההזמנות. אפשר לכפות מקור בקישור: ?src=ads-shabbat
+const SRC = (() => {
+  let s = "";
+  try {
+    const u = new URLSearchParams(location.search);
+    s = (u.get("src") || u.get("utm_source") || "").toLowerCase().replace(/[^a-z0-9_-]/g, "").slice(0, 30);
+    if (s) sessionStorage.setItem("yg-src", s); else s = sessionStorage.getItem("yg-src") || "";
+  } catch (e) {}
+  if (s) return s;
+  const r = document.referrer || "";
+  if (/instagram\./.test(r)) return "ig";
+  if (/facebook\.|fb\.com/.test(r)) return "fb";
+  if (/tiktok\./.test(r)) return "tt";
+  if (/whatsapp\./.test(r)) return "wa";
+  if (/google\./.test(r)) return "google";
+  return r && !r.includes(location.host) ? "other" : "direct";
+})();
+const aff = (url, src = SRC) => url ? String(url).replace(/((?:sh)?marker=)(\d+)(?=&|$)/, `$1$2.${src}`) : url;
+// באיזה אתר ממשיכים להזמין, כדי שהמעבר לא יפתיע
+function bookerName(url) {
+  const h = (() => { try { return new URL(url).hostname; } catch (e) { return ""; } })();
+  return /aviasales/.test(h) ? "Aviasales" : /google\./.test(h) ? "Google Flights" : /kiwi/.test(h) ? "Kiwi.com" : "";
+}
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 // רקע חלופי כשאין תמונה: גוון קבוע לכל יעד
@@ -377,6 +403,7 @@ function renderCover() {
     <div class="kicker">${sh ? "הזול ביותר לכל סופ״ש, לשומרי שבת" : "הזול ביותר לכל סופ״ש"}</div>
     <h1>לאן טסים בסופ״ש?</h1>
     <p class="lede">הטיסות הכי זולות מתל אביב, הלוך-חזור לאדם. בוחרים סופ״ש ורואים את כל הדילים שלו.</p>
+    <p class="trust">המערכת שלנו סורקת את מחירי הטיסות, ואתם מזמינים ישירות באתר ההזמנה באותו מחיר.</p>
     <div class="wk-tiles">${tiles}</div>`;
 }
 
@@ -405,7 +432,7 @@ function card(d, i) {
         </div>
         <dl class="legs"><dt>הלוך</dt><dd>${out}</dd><dt>חזור</dt><dd>${d.ret_day} ${dm(d.ret_date)} · ${retText(d)}</dd></dl>
         <div class="meta">${meta}</div>
-        ${d.link ? `<a class="book" href="${esc(d.link)}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
+        ${d.link ? `<a class="book" href="${esc(aff(d.link))}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
       </div>
     </div>
     <details class="dx">
@@ -431,9 +458,9 @@ function saveHtml(d) {
 function extrasHtml(d) {
   // כל הקישורים כאן מגיעים מהמנוע רק כשנוצר קישור שותפים (כלומר יש עמלה). בלי קישור כזה לא מציגים כלום.
   const items = [];
-  if (d.hotel_link) items.push(`<a class="btn" href="${esc(d.hotel_link)}" target="_blank" rel="noopener" aria-label="מלונות ב${esc(d.name)} לתאריכי הטיסה (נפתח בחלון חדש)">${ic("bed")} מלון ב${esc(d.name)}</a>`);
-  if (d.esim_link) items.push(`<a class="btn" href="${esc(d.esim_link)}" target="_blank" rel="noopener" aria-label="eSIM לגלישה ב${esc(d.name)} (נפתח בחלון חדש)">${ic("phone")} eSIM לגלישה</a>`);
-  if (d.compare_link) items.push(`<a class="btn" href="${esc(d.compare_link)}" target="_blank" rel="noopener nofollow sponsored" aria-label="השוואת המחיר ל${esc(d.name)} ב-Kiwi (נפתח בחלון חדש)">${ic("scale")} להשוות ב-Kiwi</a>`);
+  if (d.hotel_link) items.push(`<a class="btn" href="${esc(aff(d.hotel_link))}" target="_blank" rel="noopener" aria-label="מלונות ב${esc(d.name)} לתאריכי הטיסה (נפתח בחלון חדש)">${ic("bed")} מלון ב${esc(d.name)}</a>`);
+  if (d.esim_link) items.push(`<a class="btn" href="${esc(aff(d.esim_link))}" target="_blank" rel="noopener" aria-label="eSIM לגלישה ב${esc(d.name)} (נפתח בחלון חדש)">${ic("phone")} eSIM לגלישה</a>`);
+  if (d.compare_link) items.push(`<a class="btn" href="${esc(aff(d.compare_link))}" target="_blank" rel="noopener nofollow sponsored" aria-label="השוואת המחיר ל${esc(d.name)} ב-Kiwi (נפתח בחלון חדש)">${ic("scale")} להשוות ב-Kiwi</a>`);
   return items.length ? `<div class="btnrow">${items.join("")}</div>` : "";
 }
 
@@ -450,8 +477,8 @@ function dealText(d) {
   const ks = ((state.data.dests || {})[d.dest] || {}).kosher;
   if (sh && ks) lines.push(`✡️ ${ks.note}`);
   if (d.to_center_min) lines.push(`🚕 מהשדה למרכז העיר כ-${d.to_center_min} דק׳ במונית${d.pt_min ? `, כ-${d.pt_min} דק׳ בתחבורה ציבורית` : ""} (משוער)`);
-  if (d.link) lines.push("", `להזמנה: ${d.link}`);
-  if (state.data.site_url) lines.push(`עוד דילים לסופ"ש: ${state.data.site_url}`);
+  if (d.link) lines.push("", `להזמנה: ${aff(d.link, "share")}`);
+  if (state.data.site_url) lines.push(`עוד דילים לסופ"ש: ${state.data.site_url.replace(/\/$/, "")}/?src=share`);
   lines.push("_המחיר נכון לשעת הבדיקה ועשוי להשתנות._");
   return lines.join("\n");
 }
@@ -510,6 +537,8 @@ function updatedText(gen) {
 
 function init(data) {
   state.data = data;
+  // קישור ישיר לרשימה מסוימת, למשל לפרסומות לקהל דתי: yg-weekend.github.io/?list=shabbat
+  try { const l = new URLSearchParams(location.search).get("list"); if (l && data.lists[l]) state.list = l; } catch (e) {}
   const gen = new Date(data.generated_at);
   $("#when").innerHTML = `${updatedText(gen)}<span class="wk-n"> · ${data.weekends.length} סופ"שים קדימה</span>`;
   $("#demo").hidden = !data.demo;
@@ -539,7 +568,7 @@ function init(data) {
   document.querySelectorAll("#mode button").forEach(b => b.onclick = () => { state.mode = b.dataset.mode; state.day = null; state.shown = 20; render(); });
   document.querySelectorAll("#days .chip").forEach(b => b.onclick = () => { state.day = b.dataset.day === "" ? null : +b.dataset.day; state.shown = 20; render(); });
   if (data.kiwi_link) {
-    $("#kiwi").innerHTML = `רוצים לבדוק עוד אפשרויות? אפשר לחפש גם ב-<a href="${esc(data.kiwi_link)}" target="_blank" rel="noopener">Kiwi.com</a> (נפתח בחלון חדש). שם יש גם שילובים של חברות תעופה שונות להלוך ולחזור.`;
+    $("#kiwi").innerHTML = `רוצים לבדוק עוד אפשרויות? אפשר לחפש גם ב-<a href="${esc(aff(data.kiwi_link))}" target="_blank" rel="noopener">Kiwi.com</a> (נפתח בחלון חדש). שם יש גם שילובים של חברות תעופה שונות להלוך ולחזור.`;
     $("#kiwi").hidden = false;
   }
   // הצעות בזמן הקלדה: קודם המדינות שיש אליהן דילים (עם הערים שלהן), ואחריהן הערים
