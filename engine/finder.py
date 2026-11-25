@@ -137,6 +137,12 @@ def ok_for_general(trip: Trip, cfg: dict) -> bool:
     return trip.stops <= cfg["max_stops"] and trip.price <= cfg["max_price"]
 
 
+def _safe(e) -> str:
+    """הודעת שגיאה ללוג בלי מפתחות: כתובת הבקשה כוללת token / api_key, והלוג של GitHub Actions ציבורי."""
+    import re
+    return re.sub(r"(?i)(token|api_key|access_token)=[^&\s]+", lambda m: m.group(1) + "=***", str(e))
+
+
 def _ceil_hour(t: datetime) -> int:
     return t.hour + (1 if (t.minute or t.second) else 0)
 
@@ -164,7 +170,7 @@ def travelpayouts_scan(cfg: dict, thursdays: list[date], token: str, marker: str
                     r.raise_for_status()
                     rows = r.json().get("data") or []
                 except Exception as e:  # noqa: BLE001 - רשת לא יציבה, ממשיכים
-                    print(f"  ! Travelpayouts {dest['code']} {out_d}: {e}", file=sys.stderr)
+                    print(f"  ! Travelpayouts {dest['code']} {out_d}: {_safe(e)}", file=sys.stderr)
                     continue
                 for row in rows:
                     trips.append(_trip_from_tp(row, dest, out_d, ret_d, marker))
@@ -231,7 +237,7 @@ def serpapi_verify(cfg: dict, dest: dict, out_d: date, ret_d: date, key: str,
         r.raise_for_status()
         js = r.json()
     except Exception as e:  # noqa: BLE001
-        print(f"  ! SerpApi {dest['code']} {out_d}: {e}", file=sys.stderr)
+        print(f"  ! SerpApi {dest['code']} {out_d}: {_safe(e)}", file=sys.stderr)
         return None
     if js.get("error"):
         print(f"  ! SerpApi {dest['code']} {out_d}: {js['error']}", file=sys.stderr)
@@ -476,7 +482,7 @@ def partner_links(urls: list[str], token: str, trs: int, marker: str, cache: dic
             if r.status_code != 200:
                 print(f"  ! Links API {r.status_code}: {js}", file=sys.stderr)
         except Exception as e:  # noqa: BLE001
-            print(f"  ! Links API: {e}", file=sys.stderr)
+            print(f"  ! Links API: {_safe(e)}", file=sys.stderr)
     return cache
 
 
