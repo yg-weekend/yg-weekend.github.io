@@ -414,7 +414,7 @@ function renderCover() {
     <div class="kicker">${sh ? "הזול ביותר לכל סופ״ש, לשומרי שבת" : "הזול ביותר לכל סופ״ש"}</div>
     <h1>לאן טסים בסופ״ש?</h1>
     <p class="lede">הטיסות הכי זולות מתל אביב, הלוך-חזור לאדם. בוחרים סופ״ש ורואים את כל הדילים שלו.</p>
-    <p class="trust">המערכת שלנו סורקת את מחירי הטיסות, ואתם מזמינים ישירות באתר ההזמנה באותו מחיר.</p>
+    <p class="trust">המערכת שלנו סורקת את מחירי הטיסות פעמיים ביום. מזמינים ישירות באתר ההזמנה, והמחיר הסופי הוא זה שמופיע שם.</p>
     <div class="wk-tiles">${tiles}</div>`;
 }
 
@@ -444,13 +444,14 @@ function card(d, i) {
         <dl class="legs"><dt>הלוך</dt><dd>${out}</dd><dt>חזור</dt><dd>${d.ret_day} ${dm(d.ret_date)} · ${retText(d)}</dd></dl>
         <div class="meta">${meta}</div>
         ${d.link ? `<a class="book" href="${esc(aff(d.link))}" target="_blank" rel="noopener" aria-label="לבדוק ולהזמין טיסה ל${esc(d.name)} ב-${nis(d.price)} (נפתח בחלון חדש)">לבדוק ולהזמין</a>` : ""}
+        ${d.link && d.source !== "live" ? `<p class="via">מחיר מ-48 השעות האחרונות, עשוי להשתנות</p>` : ""}
       </div>
     </div>
     <details class="dx">
       <summary>עוד פרטים ${ic("chevron")}</summary>
       <div class="in">
         ${saveHtml(d)}
-        <p class="note">כ-${perWay(d)} לכיוון. ${d.source === "live" ? "המחיר נבדק בעדכון האחרון." : "מחיר מ-48 השעות האחרונות, כדאי לוודא אותו בזמן ההזמנה."}</p>
+        <p class="note">כ-${perWay(d)} לכיוון. ${d.source === "live" ? "המחיר נבדק בעדכון האחרון." : "כדאי לוודא את המחיר בזמן ההזמנה."}</p>
         ${transfer}
         ${shareHtml(d, i)}
         ${extrasHtml(d)}
