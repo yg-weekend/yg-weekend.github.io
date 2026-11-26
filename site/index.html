@@ -346,7 +346,7 @@ function gcPageview() {
   gcSend({ path: shabbat ? "/shabbat" : "/", referrer: SRC === "direct" ? "" : SRC === "other" ? document.referrer : SRC });
 }
 // אירועי לחיצה: כל כפתור או קישור עם data-ev נספר כאירוע בפורמט click/<סוג>/<יעד>
-const GC_EVENTS = { book_click: "book", hotel_click: "hotel", esim_click: "esim", compare_click: "compare", kiwi_click: "kiwi",
+const GC_EVENTS = { book_click: "book", hotel_click: "hotel", esim_click: "esim", car_click: "car", compare_click: "compare", kiwi_click: "kiwi",
   share_whatsapp: "share", share_copy: "copy", social_ig: "social/ig", social_fb: "social/fb", social_tt: "social/tt",
   wa_join: "wa-group", wa_chat: "wa-chat" };
 document.addEventListener("click", (e) => {
@@ -435,6 +435,7 @@ const ICONS = {
   copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
   bed: '<path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/>',
   phone: '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>',
+  car: '<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
   scale: '<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>',
 };
 const ic = (n) => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]}</svg>`;
@@ -619,6 +620,7 @@ function extrasHtml(d) {
   const items = [];
   if (d.hotel_link) items.push(`<a class="btn" data-ev="hotel_click" href="${esc(aff(d.hotel_link))}" target="_blank" rel="noopener" aria-label="מלונות ב${esc(d.name)} לתאריכי הטיסה (נפתח בחלון חדש)">${ic("bed")} מלון ב${esc(d.name)}</a>`);
   if (d.esim_link) items.push(`<a class="btn" data-ev="esim_click" href="${esc(aff(d.esim_link))}" target="_blank" rel="noopener" aria-label="eSIM לגלישה ב${esc(d.name)} (נפתח בחלון חדש)">${ic("phone")} eSIM לגלישה</a>`);
+  if (d.car_link) items.push(`<a class="btn" data-ev="car_click" href="${esc(aff(d.car_link))}" target="_blank" rel="noopener nofollow sponsored" aria-label="השכרת רכב ב${esc(d.name)} (נפתח בחלון חדש)">${ic("car")} רכב ב${esc(d.name)}</a>`);
   if (d.compare_link) items.push(`<a class="btn" data-ev="compare_click" href="${esc(aff(d.compare_link))}" target="_blank" rel="noopener nofollow sponsored" aria-label="השוואת המחיר ל${esc(d.name)} ב-Kiwi (נפתח בחלון חדש)">${ic("scale")} להשוות ב-Kiwi</a>`);
   return items.length ? `<div class="btnrow">${items.join("")}</div>` : "";
 }

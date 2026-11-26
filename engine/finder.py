@@ -446,7 +446,7 @@ def fetch_photos(cfg: dict, cache: dict) -> dict:
 
 
 # ---------------------------------------------------------------- hotel + eSIM partner links
-def extra_urls(deal: dict, dest: dict) -> dict:
+def extra_urls(deal: dict, dest: dict, car: str | None = None) -> dict:
     """קישורים רגילים למלונות ול-eSIM ליעד ולתאריכים של הדיל (לפני המרה לקישורי שותפים)."""
     from urllib.parse import urlencode
     hotel = "https://www.booking.com/searchresults.html?" + urlencode({
@@ -458,7 +458,10 @@ def extra_urls(deal: dict, dest: dict) -> dict:
     kiwi = "https://www.kiwi.com/deep?" + urlencode({
         "from": "TLV", "to": dest["code"], "departure": deal["out_date"], "return": deal["ret_date"],
         "currency": "ILS", "lang": "he"})
-    return {"hotel": hotel, "esim": esim, "kiwi": kiwi}
+    out = {"hotel": hotel, "esim": esim, "kiwi": kiwi}
+    if car:   # עמוד השכרת רכב ליעד (Localrent), רק ליעדים שיש להם עמוד
+        out["car"] = car
+    return out
 
 
 def partner_links(urls: list[str], token: str, trs: int, marker: str, cache: dict) -> dict:
@@ -490,24 +493,25 @@ def add_extras(lists: dict, cfg: dict, token: str | None, marker: str) -> None:
     """מוסיף לכל דיל כפתור מלון וכפתור eSIM - רק אם הצלחנו לייצר קישור שותפים (כלומר יש עמלה)."""
     for deals in lists.values():
         for d in deals:
-            d["hotel_link"] = d["esim_link"] = d["compare_link"] = None
+            d["hotel_link"] = d["esim_link"] = d["compare_link"] = d["car_link"] = None
     if not token or not marker or not cfg.get("travelpayouts_trs"):
         return
     dests = {x["code"]: x for x in cfg["destinations"]}
     wanted = {}
     for deals in lists.values():
         for d in deals:
-            wanted[id(d)] = (d, extra_urls(d, dests[d["dest"]]))
+            wanted[id(d)] = (d, extra_urls(d, dests[d["dest"]], (cfg.get("car_urls") or {}).get(d["dest"])))
     cache = _load_json(DATA_DIR / "links.json", {})
     cache = partner_links([u for _, ex in wanted.values() for u in ex.values()],
                           token, cfg["travelpayouts_trs"], marker, cache)
     # מטמון קטן: שומרים רק את מה שבשימוש עכשיו + קישורי ה-eSIM הקבועים
     in_use = {u for _, ex in wanted.values() for u in ex.values()}
-    _save_json(DATA_DIR / "links.json", {u: v for u, v in cache.items() if u in in_use or "yesim" in u})
+    _save_json(DATA_DIR / "links.json", {u: v for u, v in cache.items() if u in in_use or "yesim" in u or "localrent" in u})
     for d, ex in wanted.values():
         d["hotel_link"] = cache.get(ex["hotel"])
         d["esim_link"] = cache.get(ex["esim"])
         d["compare_link"] = cache.get(ex["kiwi"])
+        d["car_link"] = cache.get(ex.get("car"))
 
 
 # ---------------------------------------------------------------- flight-time changes
