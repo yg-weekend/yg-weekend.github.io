@@ -130,6 +130,8 @@
 
   /* ---------- deal rows ---------- */
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+  .cols { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+  .col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
   .deal { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
   .deal .row { display: grid; grid-template-columns: 128px minmax(0, 1fr); }
   .thumb { position: relative; background-size: cover; background-position: center; min-height: 100%; }
@@ -664,6 +666,7 @@ function toast(msg) {
   clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("show"), 2800);
 }
 
+const WIDE = matchMedia("(min-width: 861px)");
 function render() {
   const list = deals();
   state.cur = list;
@@ -671,7 +674,16 @@ function render() {
   const rest = list.slice(0, state.shown);
   const modeTxt = state.mode === "flex" ? (state.day != null ? ` עם יציאה ב${DAYS[state.day]}` : " (הזול לכל יעד, כולל סופ״ש ארוך)") : "";
   $("#count").textContent = list.length ? `${state.more ? `${list.length} יעדים, הזול ביותר לכל יעד (${state.total} דילים בסך הכול)` : `${list.length} דילים`}${modeTxt}${state.wk ? ` לסופ"ש ${wkLabel(state.wk)}` : ""}${state.max ? ` עד ${nis(state.max)}` : ""}${state.direct ? " · ישירות בלבד" : ""}` : "";
-  $("#grid").innerHTML = list.length ? rest.map((d, i) => card(d, i) + (i % 10 === 9 ? `<div class="wa-card" role="listitem"><span>רוצים לקבל את הדילים ראשונים?</span>${waBtn("")}</div>` : "")).join("") :
+  const waCard = `<div class="wa-card" role="listitem"><span>רוצים לקבל את הדילים ראשונים?</span>${waBtn("")}</div>`;
+  let html = "";
+  if (WIDE.matches) {
+    // במחשב: שני טורים עצמאיים בכל קבוצה של 10 דילים. פתיחת "עוד פרטים" מזיזה רק את הטור שלה, בלי חור ריק ליד
+    for (let s = 0; s < rest.length; s += 10) {
+      const col = (p) => `<div class="col" role="presentation">${rest.slice(s, s + 10).map((d, j) => j % 2 === p ? card(d, s + j) : "").join("")}</div>`;
+      html += `<div class="cols" role="presentation">${col(0)}${col(1)}</div>` + (s + 10 <= rest.length ? waCard : "");
+    }
+  } else html = rest.map((d, i) => card(d, i) + (i % 10 === 9 ? waCard : "")).join("");
+  $("#grid").innerHTML = list.length ? html :
     `<div class="empty">${state.q ? `לא מצאנו דילים ל"${esc(state.q)}". נסו יעד אחר, או לבחור "כל הסופ"שים" ו"כל המחירים".` : `אין דילים שמתאימים לסינון. אפשר לבחור סופ"ש אחר או תקרת מחיר גבוהה יותר.`}</div>`;
   const left = list.length - state.shown;
   $("#more").hidden = left <= 0;
@@ -756,6 +768,7 @@ function init(data) {
     const d = (state.cur || [])[+b.dataset.copy]; if (!d) return;
     toast(await copyText(dealText(d)) ? "הדיל הועתק. עכשיו מדביקים בוואטסאפ" : "ההעתקה לא עבדה. נסו \"שליחה בוואטסאפ\"");
   });
+  WIDE.addEventListener("change", render);
   $("#foot").textContent = "המחירים לאדם, בשקלים. השעות לפי השעון המקומי. זמני שבת מחושבים לפי השקיעה ביעד, כדאי לוודא מול לוח מקומי. התמונות מוויקישיתוף. חלק מהקישורים הם קישורי שותפים: אנחנו עשויים לקבל עמלה, בלי עלות נוספת עבורכם.";
   render();
 }
